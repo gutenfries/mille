@@ -6,28 +6,16 @@ import '../constants.dart';
 import '../theme.dart';
 import '../widgets/page.dart';
 
-const List<String> accentColorNames = [
-  'System',
-  'Yellow',
-  'Orange',
-  'Red',
-  'Magenta',
-  'Purple',
-  'Blue',
-  'Teal',
-  'Green',
-];
-
-class SettingsScreen extends ScrollablePage {
-  SettingsScreen({super.key});
+class AboutScreen extends ScrollablePage {
+  AboutScreen({super.key});
 
   @override
   Widget buildHeader(BuildContext context) {
     return const PageHeader(
-      title: Text('Settings'),
+      title: Text('Debug'),
       commandBar: Align(
         alignment: Alignment.centerRight,
-        child: Icon(TablerIcons.settings, size: 24.0),
+        child: Icon(TablerIcons.bug, size: 24.0),
       ),
     );
   }
@@ -90,48 +78,6 @@ class SettingsScreen extends ScrollablePage {
         );
       }),
       biggerSpacer,
-      Text('Accent Color', style: FluentTheme.of(context).typography.subtitle),
-      spacer,
-      Wrap(children: [
-        Tooltip(
-          message: accentColorNames[0],
-          child: _buildColorBlock(appTheme, systemAccentColor),
-        ),
-        ...List.generate(Colors.accentColors.length, (index) {
-          final color = Colors.accentColors[index];
-          return Tooltip(
-            message: accentColorNames[index + 1],
-            child: _buildColorBlock(appTheme, color),
-          );
-        }),
-      ]),
-      if (Constants.isWindowEffectsSupported) ...[
-        biggerSpacer,
-        Text(
-          'Window Transparency Effects (${Constants.currentPlatform.toString().replaceAll('TargetPlatform.', '')[0].toUpperCase()}${Constants.currentPlatform.toString().replaceAll('TargetPlatform.', '').substring(1)})',
-          style: FluentTheme.of(context).typography.subtitle,
-        ),
-        spacer,
-        ...List.generate(Constants.supportedWindowEffects.length, (index) {
-          final mode = Constants.supportedWindowEffects[index];
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: RadioButton(
-              checked: appTheme.windowEffect == mode,
-              onChanged: (value) {
-                if (value) {
-                  appTheme.windowEffect = mode;
-                  appTheme.setEffect(mode, context);
-                }
-              },
-              content: Text(
-                mode.toString().replaceAll('WindowEffect.', ''),
-              ),
-            ),
-          );
-        }),
-      ],
-      biggerSpacer,
       Text('Text Direction',
           style: FluentTheme.of(context).typography.subtitle),
       spacer,
@@ -182,39 +128,5 @@ class SettingsScreen extends ScrollablePage {
         ),
       ),
     ];
-  }
-
-  Widget _buildColorBlock(AppTheme appTheme, AccentColor color) {
-    return Padding(
-      padding: const EdgeInsets.all(2.0),
-      child: Button(
-        onPressed: () {
-          appTheme.color = color;
-        },
-        style: ButtonStyle(
-          padding: ButtonState.all(EdgeInsets.zero),
-          backgroundColor: ButtonState.resolveWith((states) {
-            if (states.isPressing) {
-              return color.light;
-            } else if (states.isHovering) {
-              return color.lighter;
-            }
-            return color;
-          }),
-        ),
-        child: Container(
-          height: 40,
-          width: 40,
-          alignment: Alignment.center,
-          child: appTheme.color == color
-              ? Icon(
-                  TablerIcons.check,
-                  color: color.basedOnLuminance(),
-                  size: 22.0,
-                )
-              : null,
-        ),
-      ),
-    );
   }
 }

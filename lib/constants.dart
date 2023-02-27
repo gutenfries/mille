@@ -1,11 +1,19 @@
 import 'package:flutter/foundation.dart' as flutter_foundation;
+import 'package:flutter/material.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 
 /// Class that contains environmental constants
 ///
-/// All members are both `const` & `static` and can be accessed directly from
-/// anywhere in the program at any time with full memory safety.
+/// All members are `static` and can be accessed directly from
+/// anywhere in the program at any time.
 class Constants {
+  /// The short name of the application.
+  static const String appTitle = 'Mille';
+
+  /// The full name of the application.
+  static const String appName =
+      'Mille: An intelligent Mille Bornes scorekeeper';
+
   /// Static constant that returns the current platform as
   /// `flutter:foundatipn.TargetPlatform`.
   ///
@@ -60,7 +68,7 @@ class Constants {
     ].contains(flutter_foundation.defaultTargetPlatform);
   }
 
-  ///  Static constant that returns `true` if the current application
+  ///  Static const constant that returns `true` if the current application
   /// environment is native desktop.
   ///
   /// Platforms:
@@ -302,6 +310,60 @@ class Constants {
   /// - [isDebugMode]
   /// - [isProfileMode]
   static const bool isReleaseMode = flutter_foundation.kReleaseMode;
+
+  /// Returns the dynamic width of the current screen.
+  ///
+  /// This is the width of the screen that the application is currently
+  /// running on, or the width of the window if the application is running
+  /// in a window.
+  ///
+  /// ## Parameters:
+  ///
+  /// - `context`: The [BuildContext] of the widget that is requesting the
+  ///  width of the screen.
+  ///
+  /// ## See Also:
+  /// - [screenHeight]
+  /// - [screenSize]
+  static double screenWidth(BuildContext context) {
+    return MediaQuery.of(context).size.width;
+  }
+
+  /// Returns the dynamic height of the current screen.
+  ///
+  /// This is the height of the screen that the application is currently
+  /// running on, or the height of the window if the application is running
+  /// in a window.
+  ///
+  /// ## Parameters:
+  ///
+  /// - `context`: The [BuildContext] of the widget that is requesting the
+  ///  height of the screen.
+  ///
+  /// ## See Also:
+  /// - [screenWidth]
+  /// - [screenSize]
+  static double screenHeight(BuildContext context) {
+    return MediaQuery.of(context).size.height;
+  }
+
+  /// Returns the dynamic size of the current screen.
+  ///
+  /// This is the size of the screen that the application is currently
+  /// running on, or the size of the window if the application is running
+  /// in a window.
+  ///
+  /// ## Parameters:
+  ///
+  /// - `context`: The [BuildContext] of the widget that is requesting the
+  ///  size of the screen.
+  ///
+  /// ## See Also:
+  /// - [screenWidth]
+  /// - [screenHeight]
+  static Size screenSize(BuildContext context) {
+    return MediaQuery.of(context).size;
+  }
 
   /// Static constant containing supported window effects on Linux.
   ///

@@ -1,49 +1,34 @@
 /// Current sponsors of the project <3
-const sponsors = [
+final sponsors = [
   Sponsor(
     username: 'h3x4d3c1m4l',
-    imageUrl: 'https://avatars.githubusercontent.com/u/2611894?v=4',
     name: 'Sander in \'t Hout',
   ),
   Sponsor(
     username: 'phorcys420',
-    imageUrl: 'https://avatars.githubusercontent.com/u/57866459?v=4',
     name: 'Phorcys',
   ),
   Sponsor(
     username: 'whiplashoo',
-    imageUrl: 'https://avatars.githubusercontent.com/u/9117427?v=4',
     name: 'Minas Giannekas',
   ),
   Sponsor(
     username: 'henry2man',
-    imageUrl: 'https://avatars.githubusercontent.com/u/4610108?v=4',
     name: 'Enrique Cardona',
   ),
 ];
 
 class Sponsor {
-  final String? username;
+  final String username;
   final String name;
-  final String imageUrl;
 
-  const Sponsor({
+  late String imageUrl = 'https://avatars.githubusercontent.com/$username';
+
+  Sponsor({
     required this.username,
     required this.name,
-    required this.imageUrl,
+    // required this.imageUrl,
   });
-
-  Sponsor copyWith({
-    String? username,
-    String? name,
-    String? imageUrl,
-  }) {
-    return Sponsor(
-      username: username ?? this.username,
-      name: name ?? this.name,
-      imageUrl: imageUrl ?? this.imageUrl,
-    );
-  }
 
   @override
   String toString() =>

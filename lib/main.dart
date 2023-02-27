@@ -1,31 +1,27 @@
 import 'package:fluent_ui/fluent_ui.dart' hide Page;
 import 'package:flutter_acrylic/flutter_acrylic.dart' as flutter_acrylic;
-import 'package:mille/constants.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:system_theme/system_theme.dart';
 import 'package:url_launcher/link.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'package:window_manager/window_manager.dart';
 
+import 'screens/debug.dart';
 import 'screens/home.dart';
 import 'screens/settings.dart';
+import 'screens/about.dart';
 
-import 'routes/popups.dart' deferred as popups;
-import 'routes/forms.dart' deferred as forms;
-import 'routes/inputs.dart' deferred as inputs;
-import 'routes/navigation.dart' deferred as navigation;
-import 'routes/surfaces.dart' deferred as surfaces;
 import 'routes/theming.dart' deferred as theming;
 
+import 'constants.dart';
+import 'debug.dart';
 import 'theme.dart';
-import 'widgets/deferred_widget.dart';
-
-const String appTitle = 'Win UI for Flutter';
+import 'helpers/deferred_widget.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // if it's not on the web, windows or android, load the accent color
   if (Constants.isSystemAccentColorSupported) {
     SystemTheme.accentColor.load();
   }
@@ -40,29 +36,26 @@ void main() async {
         TitleBarStyle.hidden,
         windowButtonVisibility: false,
       );
-      await windowManager.setSize(const Size(755, 545));
       await windowManager.setMinimumSize(const Size(350, 600));
-      await windowManager.center();
       await windowManager.show();
-      await windowManager.setPreventClose(true);
       await windowManager.setSkipTaskbar(false);
+      await windowManager.setAlwaysOnTop(false);
     });
   }
 
-  runApp(const MyApp());
+  runApp(const App());
 
   Future.wait([
-    DeferredWidget.preload(popups.loadLibrary),
-    DeferredWidget.preload(forms.loadLibrary),
-    DeferredWidget.preload(inputs.loadLibrary),
-    DeferredWidget.preload(navigation.loadLibrary),
-    DeferredWidget.preload(surfaces.loadLibrary),
     DeferredWidget.preload(theming.loadLibrary),
   ]);
+
+  if (Constants.isDebugMode) {
+    Debug.dumpEnviroment();
+  }
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +64,7 @@ class MyApp extends StatelessWidget {
       builder: (context, _) {
         final appTheme = context.watch<AppTheme>();
         return FluentApp(
-          title: appTitle,
+          title: Constants.appTitle,
           themeMode: appTheme.mode,
           debugShowCheckedModeBanner: false,
           color: appTheme.color,
@@ -106,24 +99,27 @@ class MyApp extends StatelessWidget {
             );
           },
           initialRoute: '/',
-          routes: {'/': (context) => const MyHomePage()},
+          routes: {
+            '/': (context) => const _GlobalApplication(),
+          },
         );
       },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class _GlobalApplication extends StatefulWidget {
+  const _GlobalApplication({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<_GlobalApplication> createState() => _GlobalApplicationState();
 }
 
-class _MyHomePageState extends State<MyHomePage> with WindowListener {
+class _GlobalApplicationState extends State<_GlobalApplication>
+    with WindowListener {
   bool value = false;
 
-  int index = 0;
+  int navIndex = 0;
 
   final viewKey = GlobalKey(debugLabel: 'Navigation View Key');
   final searchKey = GlobalKey(debugLabel: 'Search Bar Key');
@@ -132,186 +128,13 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
 
   final List<NavigationPaneItem> originalItems = [
     PaneItem(
-      icon: const Icon(FluentIcons.home),
+      icon: const Icon(TablerIcons.home),
       title: const Text('Home'),
       body: const HomePage(),
     ),
-    PaneItemHeader(header: const Text('Inputs')),
-    PaneItem(
-      icon: const Icon(FluentIcons.button_control),
-      title: const Text('Button'),
-      body: DeferredWidget(
-        inputs.loadLibrary,
-        () => inputs.ButtonPage(),
-      ),
-    ),
-    PaneItem(
-      icon: const Icon(FluentIcons.checkbox_composite),
-      title: const Text('Checkbox'),
-      body: DeferredWidget(
-        inputs.loadLibrary,
-        () => inputs.CheckBoxPage(),
-      ),
-    ),
-    PaneItem(
-      icon: const Icon(FluentIcons.slider),
-      title: const Text('Slider'),
-      body: DeferredWidget(
-        inputs.loadLibrary,
-        () => inputs.SliderPage(),
-      ),
-    ),
-    PaneItem(
-      icon: const Icon(FluentIcons.toggle_left),
-      title: const Text('ToggleSwitch'),
-      body: DeferredWidget(
-        inputs.loadLibrary,
-        () => inputs.ToggleSwitchPage(),
-      ),
-    ),
-    PaneItemHeader(header: const Text('Form')),
-    PaneItem(
-      icon: const Icon(FluentIcons.text_field),
-      title: const Text('TextBox'),
-      body: DeferredWidget(
-        forms.loadLibrary,
-        () => forms.TextBoxPage(),
-      ),
-    ),
-    PaneItem(
-      icon: const Icon(FluentIcons.page_list),
-      title: const Text('AutoSuggestBox'),
-      body: DeferredWidget(
-        forms.loadLibrary,
-        () => forms.AutoSuggestBoxPage(),
-      ),
-    ),
-    PaneItem(
-      icon: const Icon(FluentIcons.combobox),
-      title: const Text('ComboBox'),
-      body: DeferredWidget(
-        forms.loadLibrary,
-        () => forms.ComboBoxPage(),
-      ),
-    ),
-    PaneItem(
-      icon: const Icon(FluentIcons.time_picker),
-      title: const Text('TimePicker'),
-      body: DeferredWidget(
-        forms.loadLibrary,
-        () => forms.TimePickerPage(),
-      ),
-    ),
-    PaneItem(
-      icon: const Icon(FluentIcons.date_time),
-      title: const Text('DatePicker'),
-      body: DeferredWidget(
-        forms.loadLibrary,
-        () => forms.DatePickerPage(),
-      ),
-    ),
-    PaneItemHeader(header: const Text('Navigation')),
-    PaneItem(
-      icon: const Icon(FluentIcons.navigation_flipper),
-      title: const Text('NavigationView'),
-      body: DeferredWidget(
-        navigation.loadLibrary,
-        () => navigation.NavigationViewPage(),
-      ),
-    ),
-    PaneItem(
-      icon: const Icon(FluentIcons.table_header_row),
-      title: const Text('TabView'),
-      body: DeferredWidget(
-        navigation.loadLibrary,
-        () => navigation.TabViewPage(),
-      ),
-    ),
-    PaneItem(
-      icon: const Icon(FluentIcons.bulleted_tree_list),
-      title: const Text('TreeView'),
-      body: DeferredWidget(
-        navigation.loadLibrary,
-        () => navigation.TreeViewPage(),
-      ),
-    ),
-    PaneItemHeader(header: const Text('Surfaces')),
-    PaneItem(
-      icon: const Icon(FluentIcons.un_set_color),
-      title: const Text('Acrylic'),
-      body: DeferredWidget(
-        surfaces.loadLibrary,
-        () => surfaces.AcrylicPage(),
-      ),
-    ),
-    PaneItem(
-      icon: const Icon(FluentIcons.customize_toolbar),
-      title: const Text('CommandBar'),
-      body: DeferredWidget(
-        surfaces.loadLibrary,
-        () => surfaces.CommandBarsPage(),
-      ),
-    ),
-    PaneItem(
-      icon: const Icon(FluentIcons.expand_all),
-      title: const Text('Expander'),
-      body: DeferredWidget(
-        surfaces.loadLibrary,
-        () => surfaces.ExpanderPage(),
-      ),
-    ),
-    PaneItem(
-      icon: const Icon(FluentIcons.info_solid),
-      title: const Text('InfoBar'),
-      body: DeferredWidget(
-        surfaces.loadLibrary,
-        () => surfaces.InfoBarsPage(),
-      ),
-    ),
-    PaneItem(
-      icon: const Icon(FluentIcons.progress_ring_dots),
-      title: const Text('Progress Indicators'),
-      body: DeferredWidget(
-        surfaces.loadLibrary,
-        () => surfaces.ProgressIndicatorsPage(),
-      ),
-    ),
-    PaneItem(
-      icon: const Icon(FluentIcons.tiles),
-      title: const Text('Tiles'),
-      body: DeferredWidget(
-        surfaces.loadLibrary,
-        () => surfaces.TilesPage(),
-      ),
-    ),
-    PaneItemHeader(header: const Text('Popups')),
-    PaneItem(
-      icon: const Icon(FluentIcons.comment_urgent),
-      title: const Text('ContentDialog'),
-      body: DeferredWidget(
-        surfaces.loadLibrary,
-        () => popups.ContentDialogPage(),
-      ),
-    ),
-    PaneItem(
-      icon: const Icon(FluentIcons.hint_text),
-      title: const Text('Tooltip'),
-      body: DeferredWidget(
-        surfaces.loadLibrary,
-        () => popups.TooltipPage(),
-      ),
-    ),
-    PaneItem(
-      icon: const Icon(FluentIcons.pop_expand),
-      title: const Text('Flyout'),
-      body: DeferredWidget(
-        surfaces.loadLibrary,
-        () => popups.Flyout2Screen(),
-      ),
-    ),
     PaneItemHeader(header: const Text('Theming')),
     PaneItem(
-      icon: const Icon(FluentIcons.color_solid),
+      icon: const Icon(TablerIcons.color_swatch),
       title: const Text('Colors'),
       body: DeferredWidget(
         theming.loadLibrary,
@@ -319,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
       ),
     ),
     PaneItem(
-      icon: const Icon(FluentIcons.font_color_a),
+      icon: const Icon(TablerIcons.a_b),
       title: const Text('Typography'),
       body: DeferredWidget(
         theming.loadLibrary,
@@ -327,7 +150,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
       ),
     ),
     PaneItem(
-      icon: const Icon(FluentIcons.icon_sets_flag),
+      icon: const Icon(TablerIcons.icons),
       title: const Text('Icons'),
       body: DeferredWidget(
         theming.loadLibrary,
@@ -335,7 +158,7 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
       ),
     ),
     PaneItem(
-      icon: const Icon(FluentIcons.focus),
+      icon: const Icon(TablerIcons.focus),
       title: const Text('Reveal Focus'),
       body: DeferredWidget(
         theming.loadLibrary,
@@ -346,16 +169,21 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
   final List<NavigationPaneItem> footerItems = [
     PaneItemSeparator(),
     PaneItem(
-      icon: const Icon(FluentIcons.settings),
+      icon: const Icon(TablerIcons.info_circle),
+      title: const Text('About'),
+      body: AboutScreen(),
+    ),
+    PaneItem(
+      icon: const Icon(TablerIcons.settings),
       title: const Text('Settings'),
       body: SettingsScreen(),
     ),
-    _LinkPaneItemAction(
-      icon: const Icon(FluentIcons.open_source),
-      title: const Text('Source code'),
-      link: 'https://github.com/bdlukaa/fluent_ui',
-      body: const SizedBox.shrink(),
-    ),
+    if (Constants.isDebugMode)
+      PaneItem(
+        icon: const Icon(TablerIcons.bug),
+        title: const Text('Debug'),
+        body: DebugScreen(),
+      ),
   ];
 
   @override
@@ -375,72 +203,51 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
   @override
   Widget build(BuildContext context) {
     final appTheme = context.watch<AppTheme>();
-    final theme = FluentTheme.of(context);
     return NavigationView(
       key: viewKey,
       appBar: NavigationAppBar(
         automaticallyImplyLeading: false,
         title: () {
-          if (!Constants.isMobile) {
+          if (Constants.isNativeDesktop) {
+            return const DragToMoveArea(
+              child: Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(Constants.appTitle),
+              ),
+            );
+          } else {
             return const Align(
               alignment: AlignmentDirectional.centerStart,
-              child: Text(appTitle),
+              child: Text(Constants.appTitle),
             );
           }
-          return const DragToMoveArea(
-            child: Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: Text(appTitle),
-            ),
-          );
         }(),
         actions: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-          if (!Constants.isMobile)
+          if (Constants.screenWidth(context) > 600)
             Padding(
-                padding: const EdgeInsetsDirectional.only(end: 8.0),
-                child: Align(
-                  child: ToggleSwitch(
-                    content: const Text('Dark Mode'),
-                    checked: FluentTheme.of(context).brightness.isDark,
-                    onChanged: (v) {
-                      if (v) {
-                        appTheme.mode = ThemeMode.dark;
-                      } else {
-                        appTheme.mode = ThemeMode.light;
-                      }
-                    },
-                  ),
-                )),
+              padding: const EdgeInsetsDirectional.only(end: 8.0),
+              child: Align(
+                child: ToggleSwitch(
+                  content: const Text('Dark Mode'),
+                  checked: FluentTheme.of(context).brightness.isDark,
+                  onChanged: (v) {
+                    if (v) {
+                      appTheme.mode = ThemeMode.dark;
+                    } else {
+                      appTheme.mode = ThemeMode.light;
+                    }
+                  },
+                ),
+              ),
+            ),
           if (Constants.isNativeDesktop) const WindowButtons(),
         ]),
       ),
       pane: NavigationPane(
-        selected: index,
+        selected: navIndex,
         onChanged: (i) {
-          setState(() => index = i);
+          setState(() => navIndex = i);
         },
-        header: SizedBox(
-          height: kOneLineTileHeight,
-          child: ShaderMask(
-            shaderCallback: (rect) {
-              final color = appTheme.color.defaultBrushFor(
-                theme.brightness,
-              );
-              return LinearGradient(
-                colors: [
-                  color,
-                  color,
-                ],
-              ).createShader(rect);
-            },
-            child: const FlutterLogo(
-              style: FlutterLogoStyle.horizontal,
-              size: 80.0,
-              textColor: Colors.white,
-              duration: Duration.zero,
-            ),
-          ),
-        ),
         displayMode: appTheme.displayMode,
         indicator: () {
           switch (appTheme.indicator) {
@@ -465,11 +272,11 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
               label: text,
               value: text,
               onSelected: () async {
-                final itemIndex = NavigationPane(
+                final navItemIndex = NavigationPane(
                   items: originalItems,
                 ).effectiveIndexOf(item);
 
-                setState(() => index = itemIndex);
+                setState(() => navIndex = navItemIndex);
                 await Future.delayed(const Duration(milliseconds: 17));
                 searchController.clear();
               },
@@ -479,11 +286,11 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
           trailingIcon: IgnorePointer(
             child: IconButton(
               onPressed: () {},
-              icon: const Icon(FluentIcons.search),
+              icon: const Icon(TablerIcons.search),
             ),
           ),
         ),
-        autoSuggestBoxReplacement: const Icon(FluentIcons.search),
+        autoSuggestBoxReplacement: const Icon(TablerIcons.search),
         footerItems: footerItems,
       ),
       onOpenSearch: () {
@@ -494,33 +301,8 @@ class _MyHomePageState extends State<MyHomePage> with WindowListener {
 
   @override
   void onWindowClose() async {
-    bool _isPreventClose = await windowManager.isPreventClose();
-    if (_isPreventClose) {
-      showDialog(
-        context: context,
-        builder: (_) {
-          return ContentDialog(
-            title: const Text('Confirm close'),
-            content: const Text('Are you sure you want to close this window?'),
-            actions: [
-              FilledButton(
-                child: const Text('Yes'),
-                onPressed: () {
-                  Navigator.pop(context);
-                  windowManager.destroy();
-                },
-              ),
-              Button(
-                child: const Text('No'),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
+    Navigator.pop(context);
+    windowManager.destroy();
   }
 }
 

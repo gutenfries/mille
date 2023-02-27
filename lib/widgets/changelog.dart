@@ -1,12 +1,12 @@
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:flutter/material.dart' as m;
+import 'package:flutter/material.dart' as material;
 import 'package:flutter_markdown/flutter_markdown.dart'
     deferred as flutter_markdown;
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'deferred_widget.dart';
+import '../helpers/deferred_widget.dart';
 
 List<String>? changelog;
 
@@ -25,11 +25,16 @@ class _ChangelogState extends State<Changelog> {
   }
 
   void fetchChangelog() async {
-    final response = await http.get(
-      Uri.parse(
-        'https://raw.githubusercontent.com/bdlukaa/fluent_ui/master/CHANGELOG.md',
-      ),
-    );
+    late http.Response response;
+    try {
+      response = await http.get(
+        Uri.parse(
+          'https://raw.githubusercontent.com/gutenfries/mille/main/CHANGELOG.md',
+        ),
+      );
+    } catch (e) {
+      debugPrint(e.toString());
+    }
 
     if (response.statusCode == 200) {
       final _changelog = response.body.split('\n')..removeRange(0, 2);
@@ -55,9 +60,6 @@ class _ChangelogState extends State<Changelog> {
               data: changelog!.map<String>((line) {
                 if (line.startsWith('## [')) {
                   final version = line.split(']').first.replaceAll('## [', '');
-                  // if (line.split('-').length == 2) {
-                  //   print('GO- ${line.split('-')[0]} - ${line.split('-')[1]}');
-                  // }
                   String date = line
                       .split('-')
                       .last
@@ -78,13 +80,14 @@ class _ChangelogState extends State<Changelog> {
                   }
                   return '## $version\n$date';
                 }
+
                 return line;
               }).join('\n'),
               onTapLink: (text, href, title) {
                 launchUrl(Uri.parse(href!));
               },
               styleSheet: flutter_markdown.MarkdownStyleSheet.fromTheme(
-                m.Theme.of(context),
+                material.Theme.of(context),
               ).copyWith(
                 a: TextStyle(
                   color: theme.accentColor.defaultBrushFor(
@@ -101,43 +104,3 @@ class _ChangelogState extends State<Changelog> {
     );
   }
 }
-
-//
-
-// class CodeElementBuilder extends flutter_markdown.MarkdownElementBuilder {
-//   @override
-//   Widget? visitElementAfter(md.Element element, TextStyle? preferredStyle) {
-//     var language = 'dart';
-
-//     if (element.attributes['class'] != null) {
-//       String lg = element.attributes['class'] as String;
-//       language = lg.substring(9);
-//     }
-//     return SizedBox(
-//       width:
-//           MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.width,
-//       child: HighlightView(
-//         // The original code to be highlighted
-//         element.textContent,
-
-//         // Specify language
-//         // It is recommended to give it a value for performance
-//         language: language,
-
-//         // Specify highlight theme
-//         // All available themes are listed in `themes` folder
-//         // theme: MediaQueryData.fromWindow(WidgetsBinding.instance!.window)
-//         //             .platformBrightness ==
-//         //         Brightness.light
-//         //     ? atomOneLightTheme
-//         //     : atomOneDarkTheme,
-
-//         // Specify padding
-//         padding: const EdgeInsets.all(8),
-
-//         // Specify text style
-//         // textStyle: GoogleFonts.robotoMono(),
-//       ),
-//     );
-//   }
-// }

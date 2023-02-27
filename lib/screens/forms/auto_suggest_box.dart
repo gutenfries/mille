@@ -1,6 +1,7 @@
-import 'package:mille/widgets/card_highlight.dart';
-import 'package:mille/widgets/page.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+
+import '../../widgets/card_highlight.dart';
+import '../../widgets/page.dart';
 
 class AutoSuggestBoxPage extends StatefulWidget {
   const AutoSuggestBoxPage({Key? key}) : super(key: key);
@@ -71,7 +72,7 @@ AutoSuggestBox<String>(
       value: cat,
       label: cat,
       onFocusChange: (focused) {
-        if (focused) { 
+        if (focused) {
           debugPrint('Focused \$cat');
         }
       }
@@ -137,7 +138,7 @@ class Cat {
 
   const Cat(this.id, this.name, this.hasTag);
 }
-        
+
 Cat? selectedObjectCat;
 
 AutoSuggestBox<Cat>(

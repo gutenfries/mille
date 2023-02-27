@@ -10,111 +10,88 @@ class Debug {
   static void dumpEnviroment() {
     debugLog(
       '\n -- DEBUG ENVIROMENT DUMP --\n',
-      showTime: false,
       color: _ANSI.blue,
     );
     debugLog(
       '\n -- Enviromental Variables --\n',
-      showTime: false,
       color: _ANSI.blue,
     );
+
     for (final entry in Platform.environment.entries) {
       if (entry.key.contains('PATH')) {
         debugLog(
           ' - ${entry.key}: ${_colorizePathVar(entry.value)}',
-          showTime: false,
         );
       } else {
         debugLog(
           ' - ${entry.key}: ${_colorizeVar(entry.value)}',
-          showTime: false,
         );
       }
     }
+
     debugLog(
       '\n -- Platform constants: --\n',
-      showTime: false,
       color: _ANSI.blue,
     );
     debugLog(
       ' - Platform: ${_colorizeVar(Constants.currentPlatform)}',
-      showTime: false,
     );
     debugLog(
       ' - IsWeb: ${_colorizeVar(Constants.isWeb)}',
-      showTime: false,
     );
     debugLog(
       ' - IsNative: ${_colorizeVar(Constants.isNative)}',
-      showTime: false,
     );
     debugLog(
       ' - IsDesktop: ${_colorizeVar(Constants.isDesktop)}',
-      showTime: false,
     );
     debugLog(
       ' - IsMobile: ${_colorizeVar(Constants.isMobile)}',
-      showTime: false,
     );
     debugLog(
       ' - IsWindowEffectsSupported: ${_colorizeVar(Constants.isWindowEffectsSupported)}',
-      showTime: false,
     );
     debugLog(
       ' - IsSystemAccentColorSupported: ${_colorizeVar(Constants.isSystemAccentColorSupported)}',
-      showTime: false,
     );
     debugLog(
       ' - IsWindows: ${_colorizeVar(Constants.isWindows)}',
-      showTime: false,
     );
     debugLog(
       ' - IsLinux: ${_colorizeVar(Constants.isLinux)}',
-      showTime: false,
     );
     debugLog(
       ' - IsMacOS: ${_colorizeVar(Constants.isMacOS)}',
-      showTime: false,
     );
     debugLog(
       ' - IsAndroid: ${_colorizeVar(Constants.isAndroid)}',
-      showTime: false,
     );
     debugLog(
       ' - IsIOS: ${_colorizeVar(Constants.isIOS)}',
-      showTime: false,
     );
     debugLog(
       ' - IsNativeWindows: ${_colorizeVar(Constants.isNativeWindows)}',
-      showTime: false,
     );
     debugLog(
       ' - IsNativeLinux: ${_colorizeVar(Constants.isNativeLinux)}',
-      showTime: false,
     );
     debugLog(
       ' - IsNativeMacOS: ${_colorizeVar(Constants.isNativeMacOS)}',
-      showTime: false,
     );
     debugLog(
       ' - IsNativeAndroid: ${_colorizeVar(Constants.isNativeAndroid)}',
-      showTime: false,
     );
     debugLog(
       ' - IsNativeIOS: ${_colorizeVar(Constants.isNativeIOS)}',
-      showTime: false,
     );
     debugLog(
       ' - IsDebugMode: ${_colorizeVar(Constants.isDebugMode)}',
-      showTime: false,
     );
     debugLog(
       ' - IsProfileMode: ${_colorizeVar(Constants.isProfileMode)}',
-      showTime: false,
     );
     debugLog(
       ' - IsReleaseMode: ${_colorizeVar(Constants.isReleaseMode)}',
-      showTime: false,
     );
   }
 
@@ -153,7 +130,6 @@ class Debug {
     String message, {
     String? color,
     bool? newLine,
-    bool? showTime,
     bool? showStackTrace,
   }) {
     if (color != null) {
@@ -161,15 +137,6 @@ class Debug {
       message = _colorize(message, color);
       // drop `color` form the heap
       color = null;
-    }
-
-    // show time by default
-    if (showTime != null && !showTime) {
-      // drop `showTime` form the heap
-      showTime = null;
-    } else {
-      // add the current time to the message
-      message = '${DateTime.now()} - $message';
     }
 
     if (showStackTrace != null && showStackTrace) {
@@ -195,6 +162,7 @@ class Debug {
       developer.log(message, name: 'Debug');
     } else {
       // web doesn't have stdout
+      // ignore: avoid_print
       print(message);
     }
   }
