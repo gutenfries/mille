@@ -7,30 +7,9 @@ import 'constants.dart';
 class Debug {
   /// Prints out ALL available environmental information to the dart stdout.
   /// (will print in the web console if running on web)
-  static void dumpEnviroment() {
+  static void logDumpEnviroment() {
     debugLog(
       '\n -- DEBUG ENVIROMENT DUMP --\n',
-      color: _ANSI.blue,
-    );
-    debugLog(
-      '\n -- Enviromental Variables --\n',
-      color: _ANSI.blue,
-    );
-
-    for (final entry in Platform.environment.entries) {
-      if (entry.key.contains('PATH')) {
-        debugLog(
-          ' - ${entry.key}: ${_colorizePathVar(entry.value)}',
-        );
-      } else {
-        debugLog(
-          ' - ${entry.key}: ${_colorizeVar(entry.value)}',
-        );
-      }
-    }
-
-    debugLog(
-      '\n -- Platform constants: --\n',
       color: _ANSI.blue,
     );
     debugLog(
@@ -47,12 +26,6 @@ class Debug {
     );
     debugLog(
       ' - IsMobile: ${_colorizeVar(Constants.isMobile)}',
-    );
-    debugLog(
-      ' - IsWindowEffectsSupported: ${_colorizeVar(Constants.isWindowEffectsSupported)}',
-    );
-    debugLog(
-      ' - IsSystemAccentColorSupported: ${_colorizeVar(Constants.isSystemAccentColorSupported)}',
     );
     debugLog(
       ' - IsWindows: ${_colorizeVar(Constants.isWindows)}',
@@ -132,38 +105,40 @@ class Debug {
     bool? newLine,
     bool? showStackTrace,
   }) {
-    if (color != null) {
-      // colorize the message
-      message = _colorize(message, color);
-      // drop `color` form the heap
-      color = null;
-    }
+    if (Constants.isDebugMode) {
+      if (color != null) {
+        // colorize the message
+        message = _colorize(message, color);
+        // drop `color` form the heap
+        color = null;
+      }
 
-    if (showStackTrace != null && showStackTrace) {
-      // add the current stack trace to the message
-      message = '$message\n${StackTrace.current}';
-      // drop `showStackTrace` form the heap
-      showStackTrace = null;
-    }
+      if (showStackTrace != null && showStackTrace) {
+        // add the current stack trace to the message
+        message = '$message\n${StackTrace.current}';
+        // drop `showStackTrace` form the heap
+        showStackTrace = null;
+      }
 
-    // add a newline by default
-    if (newLine != null && !newLine) {
-      newLine = null;
-    } else {
-      // add a new line to the message
-      message = '$message\n';
-    }
+      // add a newline by default
+      if (newLine != null && !newLine) {
+        newLine = null;
+      } else {
+        // add a new line to the message
+        message = '$message\n';
+      }
 
-    // print the message
-    if (!Constants.isWeb) {
-      // prefer stdout on native
-      stdout.write(message);
-      // write the message to the dart developer console (extranious on web)
-      developer.log(message, name: 'Debug');
-    } else {
-      // web doesn't have stdout
-      // ignore: avoid_print
-      print(message);
+      // print the message
+      if (!Constants.isWeb) {
+        // prefer stdout on native
+        stdout.write(message);
+        // write the message to the dart developer console (extranious on web)
+        developer.log(message, name: 'Debug');
+      } else {
+        // web doesn't have stdout
+        // ignore: avoid_print
+        print(message);
+      }
     }
   }
 

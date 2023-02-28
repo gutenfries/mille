@@ -36,31 +36,25 @@ class SettingsScreen extends ScrollablePage {
   List<Widget> buildScrollable(BuildContext context) {
     assert(debugCheckHasMediaQuery(context));
     final appTheme = context.watch<AppTheme>();
-    const spacer = SizedBox(height: 10.0);
-    const biggerSpacer = SizedBox(height: 40.0);
-
-    const supportedLocales = FluentLocalizations.supportedLocales;
-    final currentLocale =
-        appTheme.locale ?? Localizations.maybeLocaleOf(context);
 
     return [
-      biggerSpacer,
+      appTheme.large,
       Text('Theme mode', style: FluentTheme.of(context).typography.subtitle),
-      spacer,
+      appTheme.small,
       ...List.generate(ThemeMode.values.length, (index) {
         final mode = ThemeMode.values[index];
         return Padding(
           padding: const EdgeInsets.only(bottom: 8.0),
           child: RadioButton(
-            checked: appTheme.mode == mode,
+            checked: appTheme.themeMode == mode,
             onChanged: (value) {
               if (value) {
-                appTheme.mode = mode;
+                appTheme.themeMode = mode;
 
-                if (Constants.isWindowEffectsSupported) {
+                if (AppTheme.isWindowEffectsSupported) {
                   // some window effects require on [dark] to look good.
                   // appTheme.setEffect(WindowEffect.disabled, context);
-                  appTheme.setEffect(appTheme.windowEffect, context);
+                  appTheme.setWindowEffect(appTheme.windowEffect, context);
                 }
               }
             },
@@ -68,12 +62,12 @@ class SettingsScreen extends ScrollablePage {
           ),
         );
       }),
-      biggerSpacer,
+      appTheme.large,
       Text(
         'Navigation Display Mode',
         style: FluentTheme.of(context).typography.subtitle,
       ),
-      spacer,
+      appTheme.small,
       ...List.generate(PaneDisplayMode.values.length, (index) {
         final mode = PaneDisplayMode.values[index];
         return Padding(
@@ -89,13 +83,13 @@ class SettingsScreen extends ScrollablePage {
           ),
         );
       }),
-      biggerSpacer,
+      appTheme.large,
       Text('Accent Color', style: FluentTheme.of(context).typography.subtitle),
-      spacer,
+      appTheme.small,
       Wrap(children: [
         Tooltip(
           message: accentColorNames[0],
-          child: _buildColorBlock(appTheme, systemAccentColor),
+          child: _buildColorBlock(appTheme, appTheme.systemAccentColor),
         ),
         ...List.generate(Colors.accentColors.length, (index) {
           final color = Colors.accentColors[index];
@@ -105,15 +99,15 @@ class SettingsScreen extends ScrollablePage {
           );
         }),
       ]),
-      if (Constants.isWindowEffectsSupported) ...[
-        biggerSpacer,
+      if (AppTheme.isWindowEffectsSupported) ...[
+        appTheme.large,
         Text(
           'Window Transparency Effects (${Constants.currentPlatform.toString().replaceAll('TargetPlatform.', '')[0].toUpperCase()}${Constants.currentPlatform.toString().replaceAll('TargetPlatform.', '').substring(1)})',
           style: FluentTheme.of(context).typography.subtitle,
         ),
-        spacer,
-        ...List.generate(Constants.supportedWindowEffects.length, (index) {
-          final mode = Constants.supportedWindowEffects[index];
+        appTheme.small,
+        ...List.generate(AppTheme.supportedWindowEffects.length, (index) {
+          final mode = AppTheme.supportedWindowEffects[index];
           return Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
             child: RadioButton(
@@ -121,7 +115,7 @@ class SettingsScreen extends ScrollablePage {
               onChanged: (value) {
                 if (value) {
                   appTheme.windowEffect = mode;
-                  appTheme.setEffect(mode, context);
+                  appTheme.setWindowEffect(mode, context);
                 }
               },
               content: Text(
@@ -131,10 +125,10 @@ class SettingsScreen extends ScrollablePage {
           );
         }),
       ],
-      biggerSpacer,
+      appTheme.large,
       Text('Text Direction',
           style: FluentTheme.of(context).typography.subtitle),
-      spacer,
+      appTheme.small,
       ...List.generate(TextDirection.values.length, (index) {
         final direction = TextDirection.values[index];
         return Padding(
@@ -155,21 +149,21 @@ class SettingsScreen extends ScrollablePage {
           ),
         );
       }).reversed,
-      biggerSpacer,
+      appTheme.large,
       Text('Locale', style: FluentTheme.of(context).typography.subtitle),
-      spacer,
+      appTheme.small,
       Wrap(
         spacing: 15.0,
         runSpacing: 10.0,
         children: List.generate(
-          supportedLocales.length,
+          appTheme.supportedLocales.length,
           (index) {
-            final locale = supportedLocales[index];
+            final locale = appTheme.supportedLocales[index];
 
             return Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: RadioButton(
-                checked: currentLocale == locale,
+                checked: appTheme.currentLocale(context) == locale,
                 onChanged: (value) {
                   if (value) {
                     appTheme.locale = locale;
@@ -189,7 +183,7 @@ class SettingsScreen extends ScrollablePage {
       padding: const EdgeInsets.all(2.0),
       child: Button(
         onPressed: () {
-          appTheme.color = color;
+          appTheme.accentColor = color;
         },
         style: ButtonStyle(
           padding: ButtonState.all(EdgeInsets.zero),
@@ -206,7 +200,7 @@ class SettingsScreen extends ScrollablePage {
           height: 40,
           width: 40,
           alignment: Alignment.center,
-          child: appTheme.color == color
+          child: appTheme.accentColor == color
               ? Icon(
                   TablerIcons.check,
                   color: color.basedOnLuminance(),

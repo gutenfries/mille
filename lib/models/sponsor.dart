@@ -1,20 +1,8 @@
 /// Current sponsors of the project <3
 final sponsors = [
   Sponsor(
-    username: 'h3x4d3c1m4l',
-    name: 'Sander in \'t Hout',
-  ),
-  Sponsor(
-    username: 'phorcys420',
-    name: 'Phorcys',
-  ),
-  Sponsor(
-    username: 'whiplashoo',
-    name: 'Minas Giannekas',
-  ),
-  Sponsor(
-    username: 'henry2man',
-    name: 'Enrique Cardona',
+    username: 'gutenfries',
+    name: 'marc gutenberger',
   ),
 ];
 

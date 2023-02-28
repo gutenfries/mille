@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart' as flutter_foundation;
 import 'package:flutter/material.dart';
-import 'package:flutter_acrylic/flutter_acrylic.dart';
 
 /// Class that contains environmental constants
 ///
@@ -109,37 +108,6 @@ class Constants {
       flutter_foundation.TargetPlatform.android,
       flutter_foundation.TargetPlatform.iOS,
     ].contains(flutter_foundation.defaultTargetPlatform);
-  }
-
-  /// Static constant that returns `true` if the current application
-  /// environment supports a window transparency effects.
-  ///
-  /// Suppported platforms: (All desktop platforms)
-  /// - (Native) Windows
-  /// - (Native) Unix/Linux/BSD
-  /// - (Native) MacOS
-  static bool get isWindowEffectsSupported {
-    return !flutter_foundation.kIsWeb &&
-        [
-          flutter_foundation.TargetPlatform.windows,
-          flutter_foundation.TargetPlatform.linux,
-          flutter_foundation.TargetPlatform.macOS,
-        ].contains(flutter_foundation.defaultTargetPlatform);
-  }
-
-  /// Static constant that returns `true` if the current application
-  /// environment supports a system accent color.
-  ///
-  /// Suppported platforms:
-  /// - (Native) Windows
-  /// - (Native) Android
-  /// - Web
-  static bool get isSystemAccentColorSupported {
-    return flutter_foundation.kIsWeb ||
-        [
-          flutter_foundation.TargetPlatform.windows,
-          flutter_foundation.TargetPlatform.android,
-        ].contains(flutter_foundation.defaultTargetPlatform);
   }
 
   /// Static constant that returns `true` if the current application
@@ -363,67 +331,5 @@ class Constants {
   /// - [screenHeight]
   static Size screenSize(BuildContext context) {
     return MediaQuery.of(context).size;
-  }
-
-  /// Static constant containing supported window effects on Linux.
-  ///
-  /// Does **NOT** indicate that the current environment is Linux.
-  static const List<WindowEffect> linuxWindowEffects = [
-    WindowEffect.disabled,
-    WindowEffect.transparent,
-  ];
-
-  /// Static constant containing supported window effects on Windows.
-  ///
-  /// Does **NOT** indicate that the current environment is Windows.
-  static const List<WindowEffect> windowsWindowEffects = [
-    WindowEffect.disabled,
-    WindowEffect.solid,
-    WindowEffect.transparent,
-    WindowEffect.aero,
-    WindowEffect.acrylic,
-    WindowEffect.mica,
-    WindowEffect.tabbed,
-  ];
-
-  /// Static constant containing supported window effects on MacOS.
-  ///
-  /// Does **NOT** indicate that the current environment is MacOS.
-  static const List<WindowEffect> macosWindowEffects = [
-    WindowEffect.disabled,
-    WindowEffect.titlebar,
-    WindowEffect.selection,
-    WindowEffect.menu,
-    WindowEffect.popover,
-    WindowEffect.sidebar,
-    WindowEffect.headerView,
-    WindowEffect.sheet,
-    WindowEffect.windowBackground,
-    WindowEffect.hudWindow,
-    WindowEffect.fullScreenUI,
-    WindowEffect.toolTip,
-    WindowEffect.contentBackground,
-    WindowEffect.underWindowBackground,
-    WindowEffect.underPageBackground,
-  ];
-
-  /// Static constant containing supported window effects on the current environment.
-  /// Returns an empty list if there are no supported window effects.
-  static List<WindowEffect> get supportedWindowEffects {
-    // return empty if not on desktop
-    if (!Constants.isDesktop) return [];
-
-    // return corresponding list for the current desktop platform
-    if (Constants.isNativeWindows) {
-      return windowsWindowEffects;
-    } else if (Constants.isNativeLinux) {
-      return linuxWindowEffects;
-    } else if (Constants.isNativeMacOS) {
-      return macosWindowEffects;
-    }
-
-    /// this should never return, but leave it here to comply with
-    /// dart-analyzer `dart(body_might_complete_normally)`
-    return [];
   }
 }

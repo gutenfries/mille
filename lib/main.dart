@@ -1,9 +1,9 @@
 import 'package:fluent_ui/fluent_ui.dart' hide Page;
+import 'package:flutter/services.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart' as flutter_acrylic;
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:system_theme/system_theme.dart';
-import 'package:url_launcher/link.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -22,7 +22,7 @@ import 'helpers/deferred_widget.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (Constants.isSystemAccentColorSupported) {
+  if (AppTheme.isSystemAccentColorSupported) {
     SystemTheme.accentColor.load();
   }
 
@@ -45,12 +45,13 @@ void main() async {
 
   runApp(const App());
 
+  // load heavy buisness logic
   Future.wait([
     DeferredWidget.preload(theming.loadLibrary),
   ]);
 
   if (Constants.isDebugMode) {
-    Debug.dumpEnviroment();
+    Debug.logDumpEnviroment();
   }
 }
 
@@ -63,21 +64,22 @@ class App extends StatelessWidget {
       create: (_) => AppTheme(),
       builder: (context, _) {
         final appTheme = context.watch<AppTheme>();
+
         return FluentApp(
           title: Constants.appTitle,
-          themeMode: appTheme.mode,
+          themeMode: appTheme.themeMode,
           debugShowCheckedModeBanner: false,
-          color: appTheme.color,
+          color: appTheme.accentColor,
           darkTheme: FluentThemeData(
             brightness: Brightness.dark,
-            accentColor: appTheme.color,
+            accentColor: appTheme.accentColor,
             visualDensity: VisualDensity.standard,
             focusTheme: FocusThemeData(
               glowFactor: is10footScreen() ? 2.0 : 0.0,
             ),
           ),
           theme: FluentThemeData(
-            accentColor: appTheme.color,
+            accentColor: appTheme.accentColor,
             visualDensity: VisualDensity.standard,
             focusTheme: FocusThemeData(
               glowFactor: is10footScreen() ? 2.0 : 0.0,
@@ -101,6 +103,23 @@ class App extends StatelessWidget {
           initialRoute: '/',
           routes: {
             '/': (context) => const _GlobalApplication(),
+          },
+          shortcuts: <LogicalKeySet, Intent>{
+            // basic accessibility shortcuts
+            LogicalKeySet(LogicalKeyboardKey.select): const ActivateIntent(),
+            LogicalKeySet(LogicalKeyboardKey.space): const ActivateIntent(),
+            LogicalKeySet(LogicalKeyboardKey.enter): const ActivateIntent(),
+            LogicalKeySet(LogicalKeyboardKey.tab): const NextFocusIntent(),
+            LogicalKeySet(LogicalKeyboardKey.shift, LogicalKeyboardKey.tab):
+                const PreviousFocusIntent(),
+            LogicalKeySet(LogicalKeyboardKey.arrowLeft):
+                const DirectionalFocusIntent(TraversalDirection.left),
+            LogicalKeySet(LogicalKeyboardKey.arrowRight):
+                const DirectionalFocusIntent(TraversalDirection.right),
+            LogicalKeySet(LogicalKeyboardKey.arrowUp):
+                const DirectionalFocusIntent(TraversalDirection.up),
+            LogicalKeySet(LogicalKeyboardKey.arrowDown):
+                const DirectionalFocusIntent(TraversalDirection.down),
           },
         );
       },
@@ -126,7 +145,7 @@ class _GlobalApplicationState extends State<_GlobalApplication>
   final searchFocusNode = FocusNode();
   final searchController = TextEditingController();
 
-  final List<NavigationPaneItem> originalItems = [
+  final List<NavigationPaneItem> navItems = [
     PaneItem(
       icon: const Icon(TablerIcons.home),
       title: const Text('Home'),
@@ -232,9 +251,9 @@ class _GlobalApplicationState extends State<_GlobalApplication>
                   checked: FluentTheme.of(context).brightness.isDark,
                   onChanged: (v) {
                     if (v) {
-                      appTheme.mode = ThemeMode.dark;
+                      appTheme.themeMode = ThemeMode.dark;
                     } else {
-                      appTheme.mode = ThemeMode.light;
+                      appTheme.themeMode = ThemeMode.light;
                     }
                   },
                 ),
@@ -249,22 +268,13 @@ class _GlobalApplicationState extends State<_GlobalApplication>
           setState(() => navIndex = i);
         },
         displayMode: appTheme.displayMode,
-        indicator: () {
-          switch (appTheme.indicator) {
-            case NavigationIndicators.end:
-              return const EndNavigationIndicator();
-            case NavigationIndicators.sticky:
-            default:
-              return const StickyNavigationIndicator();
-          }
-        }(),
-        items: originalItems,
+        items: navItems,
         autoSuggestBox: AutoSuggestBox(
           key: searchKey,
           focusNode: searchFocusNode,
           controller: searchController,
           unfocusedColor: Colors.transparent,
-          items: originalItems.whereType<PaneItem>().map((item) {
+          items: navItems.whereType<PaneItem>().map((item) {
             assert(item.title is Text);
             final text = (item.title as Text).data!;
 
@@ -273,7 +283,7 @@ class _GlobalApplicationState extends State<_GlobalApplication>
               value: text,
               onSelected: () async {
                 final navItemIndex = NavigationPane(
-                  items: originalItems,
+                  items: navItems,
                 ).effectiveIndexOf(item);
 
                 setState(() => navIndex = navItemIndex);
@@ -319,41 +329,6 @@ class WindowButtons extends StatelessWidget {
       child: WindowCaption(
         brightness: theme.brightness,
         backgroundColor: Colors.transparent,
-      ),
-    );
-  }
-}
-
-class _LinkPaneItemAction extends PaneItem {
-  _LinkPaneItemAction({
-    required super.icon,
-    required this.link,
-    required super.body,
-    super.title,
-  });
-
-  final String link;
-
-  @override
-  Widget build(
-    BuildContext context,
-    bool selected,
-    VoidCallback? onPressed, {
-    PaneDisplayMode? displayMode,
-    bool showTextOnTop = true,
-    bool? autofocus,
-    int? itemIndex,
-  }) {
-    return Link(
-      uri: Uri.parse(link),
-      builder: (context, followLink) => super.build(
-        context,
-        selected,
-        followLink,
-        displayMode: displayMode,
-        showTextOnTop: showTextOnTop,
-        itemIndex: itemIndex,
-        autofocus: autofocus,
       ),
     );
   }

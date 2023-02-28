@@ -1,7 +1,8 @@
 import 'dart:math';
 
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:flutter/material.dart' as m;
+import 'package:flutter/material.dart' as material_ui;
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 
 class MaterialEquivalents extends StatefulWidget {
   const MaterialEquivalents({Key? key}) : super(key: key);
@@ -21,7 +22,7 @@ class _MaterialEquivalentsState extends State<MaterialEquivalents> {
   ];
   String? comboboxItem;
   String dropdownItem = 'Item 1';
-  final popupKey = GlobalKey<m.PopupMenuButtonState>();
+  final popupKey = GlobalKey<material_ui.PopupMenuButtonState>();
 
   double sliderValue = Random().nextDouble() * 100;
 
@@ -43,7 +44,7 @@ class _MaterialEquivalentsState extends State<MaterialEquivalents> {
           child: const Text('Content'),
           onPressed: () {},
         ),
-        m.OutlinedButton(
+        material_ui.OutlinedButton(
           child: const Text('Content'),
           onPressed: () {},
         ),
@@ -54,7 +55,7 @@ class _MaterialEquivalentsState extends State<MaterialEquivalents> {
           child: const Text('Content'),
           onPressed: () {},
         ),
-        m.TextButton(
+        material_ui.TextButton(
           child: const Text('Content'),
           onPressed: () {},
         ),
@@ -65,7 +66,7 @@ class _MaterialEquivalentsState extends State<MaterialEquivalents> {
           child: const Text('Content'),
           onPressed: () {},
         ),
-        m.ElevatedButton(
+        material_ui.ElevatedButton(
           child: const Text('Content'),
           onPressed: () {},
         ),
@@ -73,11 +74,11 @@ class _MaterialEquivalentsState extends State<MaterialEquivalents> {
       [
         const Text('IconButton'),
         IconButton(
-          icon: const Icon(FluentIcons.graph_symbol),
+          icon: const Icon(TablerIcons.brand_github),
           onPressed: () {},
         ),
-        m.IconButton(
-          icon: const Icon(FluentIcons.graph_symbol),
+        material_ui.IconButton(
+          icon: const Icon(TablerIcons.brand_github),
           onPressed: () {},
         ),
       ],
@@ -88,7 +89,7 @@ class _MaterialEquivalentsState extends State<MaterialEquivalents> {
           onChanged: (v) =>
               setState(() => comboboxChecked = v ?? comboboxChecked),
         ),
-        m.Checkbox(
+        material_ui.Checkbox(
           value: comboboxChecked,
           onChanged: (v) =>
               setState(() => comboboxChecked = v ?? comboboxChecked),
@@ -100,7 +101,7 @@ class _MaterialEquivalentsState extends State<MaterialEquivalents> {
           checked: radioChecked,
           onChanged: (v) => setState(() => radioChecked = v),
         ),
-        m.Radio<bool>(
+        material_ui.Radio<bool>(
           groupValue: true,
           value: radioChecked,
           onChanged: (v) => setState(() => radioChecked = !radioChecked),
@@ -112,7 +113,7 @@ class _MaterialEquivalentsState extends State<MaterialEquivalents> {
           checked: switchChecked,
           onChanged: (v) => setState(() => switchChecked = v),
         ),
-        m.Switch(
+        material_ui.Switch(
           value: switchChecked,
           onChanged: (v) => setState(() => switchChecked = v),
         ),
@@ -124,7 +125,7 @@ class _MaterialEquivalentsState extends State<MaterialEquivalents> {
           max: 100,
           onChanged: (v) => setState(() => sliderValue = v),
         ),
-        m.Slider(
+        material_ui.Slider(
           value: sliderValue,
           max: 100,
           onChanged: (v) => setState(() => sliderValue = v),
@@ -133,12 +134,12 @@ class _MaterialEquivalentsState extends State<MaterialEquivalents> {
       [
         const Text('ProgressRing'),
         const RepaintBoundary(child: ProgressRing()),
-        const RepaintBoundary(child: m.CircularProgressIndicator()),
+        const RepaintBoundary(child: material_ui.CircularProgressIndicator()),
       ],
       [
         const Text('ProgressBar'),
         const RepaintBoundary(child: ProgressBar()),
-        const RepaintBoundary(child: m.LinearProgressIndicator()),
+        const RepaintBoundary(child: material_ui.LinearProgressIndicator()),
       ],
       [
         const Text('ComboBox'),
@@ -149,9 +150,10 @@ class _MaterialEquivalentsState extends State<MaterialEquivalents> {
           value: comboboxItem,
           onChanged: (value) => setState(() => comboboxItem = value),
         ),
-        m.DropdownButton<String>(
+        material_ui.DropdownButton<String>(
           items: comboboxItems
-              .map((e) => m.DropdownMenuItem(child: Text(e), value: e))
+              .map(
+                  (e) => material_ui.DropdownMenuItem(child: Text(e), value: e))
               .toList(),
           value: comboboxItem,
           onChanged: (value) => setState(() => comboboxItem = value),
@@ -170,12 +172,12 @@ class _MaterialEquivalentsState extends State<MaterialEquivalents> {
               .toList(),
           title: Text(dropdownItem),
         ),
-        m.PopupMenuButton<String>(
+        material_ui.PopupMenuButton<String>(
           key: popupKey,
           itemBuilder: (context) {
             return comboboxItems
                 .map(
-                  (e) => m.PopupMenuItem(
+                  (e) => material_ui.PopupMenuItem(
                     child: Text(e),
                     value: e,
                   ),
@@ -184,8 +186,8 @@ class _MaterialEquivalentsState extends State<MaterialEquivalents> {
           },
           onSelected: (e) => setState(() => dropdownItem = e),
           initialValue: dropdownItem,
-          position: m.PopupMenuPosition.under,
-          child: m.TextButton(
+          position: material_ui.PopupMenuPosition.under,
+          child: material_ui.TextButton(
             child: Text(dropdownItem),
             onPressed: () {
               popupKey.currentState?.showButtonMenu();
@@ -196,7 +198,7 @@ class _MaterialEquivalentsState extends State<MaterialEquivalents> {
       [
         const Text('TextBox'),
         TextBox(controller: fieldController),
-        m.TextField(controller: fieldController),
+        material_ui.TextField(controller: fieldController),
       ],
       [
         const Text('TimePicker'),
@@ -204,12 +206,12 @@ class _MaterialEquivalentsState extends State<MaterialEquivalents> {
           selected: time,
           onChanged: (value) => setState(() => time),
         ),
-        m.TextButton(
+        material_ui.TextButton(
           child: const Text('Show Picker'),
           onPressed: () async {
-            final newTime = await m.showTimePicker(
+            final newTime = await material_ui.showTimePicker(
               context: context,
-              initialTime: m.TimeOfDay(
+              initialTime: material_ui.TimeOfDay(
                 hour: time.hour,
                 minute: time.minute,
               ),
@@ -233,10 +235,10 @@ class _MaterialEquivalentsState extends State<MaterialEquivalents> {
           selected: time,
           onChanged: (value) => setState(() => time),
         ),
-        m.TextButton(
+        material_ui.TextButton(
           child: const Text('Show Picker'),
           onPressed: () async {
-            final newTime = await m.showDatePicker(
+            final newTime = await material_ui.showDatePicker(
               context: context,
               initialDate: time,
               firstDate: DateTime(time.year - 100),
@@ -251,12 +253,12 @@ class _MaterialEquivalentsState extends State<MaterialEquivalents> {
       [
         const Text('ListTile'),
         ListTile(
-          leading: const Icon(FluentIcons.graph_symbol),
+          leading: const Icon(TablerIcons.brand_github),
           title: const Text('Content'),
           onPressed: () {},
         ),
-        m.ListTile(
-          leading: const Icon(FluentIcons.graph_symbol),
+        material_ui.ListTile(
+          leading: const Icon(TablerIcons.brand_github),
           title: const Text('Content'),
           onTap: () {},
         ),
@@ -267,7 +269,7 @@ class _MaterialEquivalentsState extends State<MaterialEquivalents> {
           message: 'A fluent-styled tooltip',
           child: Text('Hover'),
         ),
-        const m.Tooltip(
+        const material_ui.Tooltip(
           message: 'A material-styled tooltip',
           child: Text('Hover'),
         ),
@@ -288,13 +290,13 @@ class _MaterialEquivalentsState extends State<MaterialEquivalents> {
       );
     }
 
-    return m.Material(
-      type: m.MaterialType.transparency,
+    return material_ui.Material(
+      type: material_ui.MaterialType.transparency,
       child: Row(children: [
         Expanded(child: buildColumn(0)),
-        const m.VerticalDivider(),
+        const material_ui.VerticalDivider(),
         Expanded(child: buildColumn(1)),
-        const m.VerticalDivider(),
+        const material_ui.VerticalDivider(),
         Expanded(child: buildColumn(2)),
       ]),
     );

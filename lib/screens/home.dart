@@ -63,9 +63,8 @@ class _HomePageState extends State<HomePage> with PageMixin {
         const SizedBox(height: 22.0),
         Row(
           children: [
-            Text('SPONSORS', style: theme.typography.bodyStrong),
+            Text('Sponsors', style: theme.typography.subtitle),
             const SizedBox(width: 4.0),
-            const Icon(FluentIcons.heart_fill, size: 16.0),
           ],
         ),
         const SizedBox(height: 4.0),
@@ -82,7 +81,8 @@ class _HomePageState extends State<HomePage> with PageMixin {
                       onPressed: open,
                       icon: SponsorButton(
                         imageUrl: sponsor.imageUrl,
-                        username: '@${sponsor.username}',
+                        username: sponsor.username,
+                        name: sponsor.name,
                       ),
                     );
                   },
@@ -111,7 +111,7 @@ class _HomePageState extends State<HomePage> with PageMixin {
                         ).createShader(rect);
                       },
                       blendMode: BlendMode.srcATop,
-                      child: const Icon(FluentIcons.diamond_user, size: 60),
+                      child: const Icon(TablerIcons.heart_plus, size: 60),
                     ),
                   ),
                   const Text('Become a Sponsor!'),
@@ -122,36 +122,6 @@ class _HomePageState extends State<HomePage> with PageMixin {
         ),
         subtitle(content: const Text('Equivalents with the material library')),
         const MaterialEquivalents(),
-      ],
-    );
-  }
-}
-
-class SponsorButton extends StatelessWidget {
-  const SponsorButton({
-    Key? key,
-    required this.imageUrl,
-    required this.username,
-  }) : super(key: key);
-
-  final String imageUrl;
-  final String username;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          height: 60,
-          width: 60,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: NetworkImage(imageUrl),
-            ),
-            shape: BoxShape.circle,
-          ),
-        ),
-        Text(username)
       ],
     );
   }
