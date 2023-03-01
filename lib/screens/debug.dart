@@ -1,5 +1,6 @@
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter_syntax_view/flutter_syntax_view.dart';
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
@@ -24,7 +25,76 @@ class DebugScreen extends ScrollablePage {
   List<Widget> buildScrollable(BuildContext context) {
     assert(debugCheckHasMediaQuery(context));
     final appTheme = context.watch<AppTheme>();
+    final theme = FluentTheme.of(context);
 
-    return [];
+    return [
+      Text(
+        'Run Mode',
+        style: FluentTheme.of(context).typography.subtitle,
+      ),
+      appTheme.spacingSmall,
+      SyntaxView(
+        code: '''
+            isDebugMode: ${Constants.isDebugMode},
+            isProfileMode: ${Constants.isProfileMode},
+            isReleaseMode: ${Constants.isReleaseMode},
+'''
+            .replaceAll('            ', ''),
+        syntaxTheme: theme.brightness.isDark
+            ? SyntaxTheme.vscodeDark()
+            : SyntaxTheme.vscodeLight(),
+        fontSize: 16,
+      ),
+      appTheme.spacingLarge,
+      Text(
+        'Runtime Platform',
+        style: FluentTheme.of(context).typography.subtitle,
+      ),
+      appTheme.spacingSmall,
+      SyntaxView(
+        code: '''
+            currentPlatform: ${Constants.currentPlatform},
+
+            isWeb: ${Constants.isWeb},
+
+            isNative: ${Constants.isNative},
+
+            isWindows: ${Constants.isWindows},
+            isLinux: ${Constants.isLinux},
+            isMacOS: ${Constants.isMacOS},
+            isAndroid: ${Constants.isAndroid},
+            isIOS: ${Constants.isIOS},
+
+            isNativeWindows: ${Constants.isNativeWindows},
+            isNativeLinux: ${Constants.isNativeLinux},
+            isNativeMacOS: ${Constants.isNativeMacOS},
+            isNativeAndroid: ${Constants.isNativeAndroid},
+            isNativeIOS: ${Constants.isNativeIOS},
+'''
+            .replaceAll('            ', ''),
+        syntaxTheme: theme.brightness.isDark
+            ? SyntaxTheme.vscodeDark()
+            : SyntaxTheme.vscodeLight(),
+        fontSize: 16,
+      ),
+      appTheme.spacingLarge,
+      Text(
+        'Dimmensions',
+        style: FluentTheme.of(context).typography.subtitle,
+      ),
+      appTheme.spacingSmall,
+      SyntaxView(
+        code: '''
+            screenWidth: ${AppTheme.screenWidth(context)},
+            screenHeight: ${AppTheme.screenHeight(context)},
+            screenSize: ${AppTheme.screenSize(context)},
+'''
+            .replaceAll('            ', ''),
+        syntaxTheme: theme.brightness.isDark
+            ? SyntaxTheme.vscodeDark()
+            : SyntaxTheme.vscodeLight(),
+        fontSize: 16,
+      ),
+    ];
   }
 }

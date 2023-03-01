@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> with PageMixin {
         title: Text('Home'),
         commandBar: Align(
           alignment: Alignment.centerRight,
-          child: Icon(TablerIcons.icons, size: 24.0),
+          child: Icon(TablerIcons.home, size: 24.0),
         ),
       ),
       children: [

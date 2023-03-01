@@ -7,17 +7,11 @@ import 'package:system_theme/system_theme.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'package:window_manager/window_manager.dart';
 
-import 'screens/debug.dart';
-import 'screens/home.dart';
-import 'screens/settings.dart';
-import 'screens/about.dart';
-
-import 'routes/theming.dart' deferred as theming;
+import 'navigation.dart';
 
 import 'constants.dart';
 import 'debug.dart';
 import 'theme.dart';
-import 'helpers/deferred_widget.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,7 +41,7 @@ void main() async {
 
   // load heavy buisness logic
   Future.wait([
-    DeferredWidget.preload(theming.loadLibrary),
+    /* DeferredWidget.preload(theming.loadLibrary), */
   ]);
 
   if (Constants.isDebugMode) {
@@ -138,73 +132,6 @@ class _GlobalApplicationState extends State<_GlobalApplication>
     with WindowListener {
   bool value = false;
 
-  int navIndex = 0;
-
-  final viewKey = GlobalKey(debugLabel: 'Navigation View Key');
-  final searchKey = GlobalKey(debugLabel: 'Search Bar Key');
-  final searchFocusNode = FocusNode();
-  final searchController = TextEditingController();
-
-  final List<NavigationPaneItem> navItems = [
-    PaneItem(
-      icon: const Icon(TablerIcons.home),
-      title: const Text('Home'),
-      body: const HomePage(),
-    ),
-    PaneItemHeader(header: const Text('Theming')),
-    PaneItem(
-      icon: const Icon(TablerIcons.color_swatch),
-      title: const Text('Colors'),
-      body: DeferredWidget(
-        theming.loadLibrary,
-        () => theming.ColorsPage(),
-      ),
-    ),
-    PaneItem(
-      icon: const Icon(TablerIcons.a_b),
-      title: const Text('Typography'),
-      body: DeferredWidget(
-        theming.loadLibrary,
-        () => theming.TypographyPage(),
-      ),
-    ),
-    PaneItem(
-      icon: const Icon(TablerIcons.icons),
-      title: const Text('Icons'),
-      body: DeferredWidget(
-        theming.loadLibrary,
-        () => theming.IconsPage(),
-      ),
-    ),
-    PaneItem(
-      icon: const Icon(TablerIcons.focus),
-      title: const Text('Reveal Focus'),
-      body: DeferredWidget(
-        theming.loadLibrary,
-        () => theming.RevealFocusPage(),
-      ),
-    ),
-  ];
-  final List<NavigationPaneItem> footerItems = [
-    PaneItemSeparator(),
-    PaneItem(
-      icon: const Icon(TablerIcons.info_circle),
-      title: const Text('About'),
-      body: AboutScreen(),
-    ),
-    PaneItem(
-      icon: const Icon(TablerIcons.settings),
-      title: const Text('Settings'),
-      body: SettingsScreen(),
-    ),
-    if (Constants.isDebugMode)
-      PaneItem(
-        icon: const Icon(TablerIcons.bug),
-        title: const Text('Debug'),
-        body: DebugScreen(),
-      ),
-  ];
-
   @override
   void initState() {
     windowManager.addListener(this);
@@ -222,6 +149,7 @@ class _GlobalApplicationState extends State<_GlobalApplication>
   @override
   Widget build(BuildContext context) {
     final appTheme = context.watch<AppTheme>();
+
     return NavigationView(
       key: viewKey,
       appBar: NavigationAppBar(
@@ -242,7 +170,7 @@ class _GlobalApplicationState extends State<_GlobalApplication>
           }
         }(),
         actions: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-          if (Constants.screenWidth(context) > 600)
+          if (AppTheme.screenWidth(context) > 600)
             Padding(
               padding: const EdgeInsetsDirectional.only(end: 8.0),
               child: Align(
@@ -301,7 +229,7 @@ class _GlobalApplicationState extends State<_GlobalApplication>
           ),
         ),
         autoSuggestBoxReplacement: const Icon(TablerIcons.search),
-        footerItems: footerItems,
+        footerItems: navFooterItems,
       ),
       onOpenSearch: () {
         searchFocusNode.requestFocus();
