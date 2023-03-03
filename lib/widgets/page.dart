@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:fluent_ui/fluent_ui.dart';
 
-import '../helpers/deferred_widget.dart';
+import 'deferred_widget.dart';
 
 mixin PageMixin {
   Widget description({required Widget content}) {

@@ -7,7 +7,7 @@ import 'screens/home.dart';
 import 'screens/debug.dart';
 import 'screens/settings.dart';
 import 'screens/about.dart';
-import 'widgets/scorecard.dart';
+import 'widgets/scorecard/scorecard.dart';
 
 int navIndex = 0;
 final viewKey = GlobalKey(debugLabel: 'Navigation View Key');

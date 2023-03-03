@@ -1,7 +1,5 @@
-import 'dart:collection';
-
 import 'package:flutter/foundation.dart' as flutter_foundation;
-import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 /// Class that contains environmental constants
 ///
@@ -14,6 +12,14 @@ class Constants {
   /// The full name of the application.
   static const String appName =
       'Mille: An intelligent Mille Bornes scorekeeper';
+
+  /// allow numbers, decimal point, and negative sign
+  static final FilteringTextInputFormatter signedFloatRegex =
+      FilteringTextInputFormatter.allow(RegExp(r'^-?\d*\.?\d*'));
+
+  /// allow positive integers 1-4
+  static final FilteringTextInputFormatter positiveIntRegex =
+      FilteringTextInputFormatter.allow(RegExp(r'^[1-4]$'));
 
   /// Static constant that returns the current platform as
   /// `flutter:foundatipn.TargetPlatform`.

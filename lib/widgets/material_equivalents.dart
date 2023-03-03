@@ -12,7 +12,7 @@ class MaterialEquivalents extends StatefulWidget {
 }
 
 class _MaterialEquivalentsState extends State<MaterialEquivalents> {
-  bool comboboxChecked = true;
+  bool checkboxChecked = true;
   bool radioChecked = true;
   bool switchChecked = true;
 
@@ -85,14 +85,14 @@ class _MaterialEquivalentsState extends State<MaterialEquivalents> {
       [
         const Text('Checkbox'),
         Checkbox(
-          checked: comboboxChecked,
+          checked: checkboxChecked,
           onChanged: (v) =>
-              setState(() => comboboxChecked = v ?? comboboxChecked),
+              setState(() => checkboxChecked = v ?? checkboxChecked),
         ),
         material_ui.Checkbox(
-          value: comboboxChecked,
+          value: checkboxChecked,
           onChanged: (v) =>
-              setState(() => comboboxChecked = v ?? comboboxChecked),
+              setState(() => checkboxChecked = v ?? checkboxChecked),
         ),
       ],
       [

@@ -8,9 +8,7 @@ import 'package:url_strategy/url_strategy.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'navigation.dart';
-
 import 'constants.dart';
-import 'debug.dart';
 import 'theme.dart';
 
 void main() async {
@@ -43,10 +41,6 @@ void main() async {
   Future.wait([
     /* DeferredWidget.preload(theming.loadLibrary), */
   ]);
-
-  if (Constants.isDebugMode) {
-    Debug.logDumpEnviroment();
-  }
 }
 
 class App extends StatelessWidget {
