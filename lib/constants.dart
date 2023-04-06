@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart' as flutter_foundation;
 import 'package:flutter/services.dart';
 
-/// Class that contains environmental constants
+/// Environment constants.
 ///
-/// All members are `static` and can be accessed directly from
-/// anywhere in the program at any time.
+/// This is a static class and should be accessed
+/// without instantiation via `Constants.methodName()` or `Constants.propertyName`.
 class Constants {
   /// The short name of the application.
   static const String appTitle = 'Mille';

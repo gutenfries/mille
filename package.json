@@ -1,0 +1,8 @@
+{
+	"name": "mille",
+	"version": "1.0.0",
+	"main": "index.js",
+	"repository": "https://github.com/gutenfries/mille.git",
+	"author": "Mark Gutenberger <gutenfries@gmail.com>",
+	"license": "MIT"
+}

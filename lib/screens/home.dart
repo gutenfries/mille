@@ -2,9 +2,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:url_launcher/link.dart';
 
-import '../models/sponsor.dart';
 import '../widgets/changelog.dart';
-import '../widgets/material_equivalents.dart';
 import '../widgets/page.dart';
 import '../widgets/sponsor.dart';
 
@@ -120,8 +118,6 @@ class _HomePageState extends State<HomePage> with PageMixin {
             ),
           ],
         ),
-        subtitle(content: const Text('Equivalents with the material library')),
-        const MaterialEquivalents(),
       ],
     );
   }
