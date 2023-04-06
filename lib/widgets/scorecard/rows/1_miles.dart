@@ -1,7 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 
 import '../../../constants.dart';
-import '../scorecard.dart' show ScoreCard;
+import '../../scorecard.dart' show ScoreCard;
 
 mixin MilesRow on State<ScoreCard> {
   static final Map<String, int> state = {

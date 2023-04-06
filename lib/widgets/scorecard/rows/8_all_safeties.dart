@@ -1,6 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 
-import '../scorecard.dart' show ScoreCard;
+import '../../scorecard.dart' show ScoreCard;
 
 mixin AllSafetiesRow on State<ScoreCard> {
   static final Map<String, bool> state_ = {

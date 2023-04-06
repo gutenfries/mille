@@ -8,7 +8,7 @@ import 'screens/home.dart';
 import 'screens/debug.dart';
 import 'screens/settings.dart';
 import 'screens/about.dart';
-import 'widgets/scorecard/scorecard.dart';
+import 'widgets/scorecard.dart';
 
 class Navigation {
   static int navIndex = 0;
