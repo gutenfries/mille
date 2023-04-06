@@ -123,13 +123,14 @@ class SponsorDialog extends StatelessWidget {
         Link(
           uri: Uri.parse('https://github.com/sponsors/gutenfries'),
           builder: (context, open) => FilledButton(
-            child: const Text('GitHub Sponsors'),
             onPressed: open,
+            child: const Text('GitHub Sponsors'),
           ),
         ),
         Link(
           uri: Uri.parse('https://account.venmo.com/u/gutenfries'),
           builder: (context, open) => FilledButton(
+            // ignore: sort_child_properties_last
             child: const Text('Venmo'),
             onPressed: open,
           ),

@@ -1,15 +1,13 @@
 // flutter & fluent ui
 import 'package:fluent_ui/fluent_ui.dart' hide Page;
 import 'package:flutter/services.dart';
-import 'package:mille/handlers.dart';
 import 'package:mille/persistence/adapters.dart';
-import 'package:mille/widgets/scorecard/scorecard.dart';
+import 'package:mille/widgets/scorecard.dart';
 import 'package:provider/provider.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 // data persistence
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:hive/hive.dart';
 
 import 'persistence/models/game.dart';
 

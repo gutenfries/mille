@@ -3,6 +3,8 @@ import 'package:flutter/material.dart' as material;
 import 'package:flutter_markdown/flutter_markdown.dart'
     deferred as flutter_markdown;
 import 'package:http/http.dart' as http;
+// False positive:
+// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -37,8 +39,8 @@ class _ChangelogState extends State<Changelog> {
     }
 
     if (response.statusCode == 200) {
-      final _changelog = response.body.split('\n')..removeRange(0, 2);
-      setState(() => changelog = _changelog);
+      final changelog_ = response.body.split('\n')..removeRange(0, 2);
+      setState(() => changelog = changelog_);
     } else {
       debugPrint(response.body);
     }

@@ -22,6 +22,7 @@ class _MaterialEquivalentsState extends State<MaterialEquivalents> {
   ];
   String? comboboxItem;
   String dropdownItem = 'Item 1';
+  // ignore: strict_raw_type
   final popupKey = GlobalKey<material_ui.PopupMenuButtonState>();
 
   double sliderValue = Random().nextDouble() * 100;
@@ -145,7 +146,7 @@ class _MaterialEquivalentsState extends State<MaterialEquivalents> {
         const Text('ComboBox'),
         ComboBox<String>(
           items: comboboxItems
-              .map((e) => ComboBoxItem(child: Text(e), value: e))
+              .map((e) => ComboBoxItem(value: e, child: Text(e)))
               .toList(),
           value: comboboxItem,
           onChanged: (value) => setState(() => comboboxItem = value),
@@ -153,7 +154,7 @@ class _MaterialEquivalentsState extends State<MaterialEquivalents> {
         material_ui.DropdownButton<String>(
           items: comboboxItems
               .map(
-                  (e) => material_ui.DropdownMenuItem(child: Text(e), value: e))
+                  (e) => material_ui.DropdownMenuItem(value: e, child: Text(e)))
               .toList(),
           value: comboboxItem,
           onChanged: (value) => setState(() => comboboxItem = value),
@@ -178,8 +179,8 @@ class _MaterialEquivalentsState extends State<MaterialEquivalents> {
             return comboboxItems
                 .map(
                   (e) => material_ui.PopupMenuItem(
-                    child: Text(e),
                     value: e,
+                    child: Text(e),
                   ),
                 )
                 .toList();

@@ -1,7 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 
-import '../scorecard.dart' show ScoreCard;
+import '../../scorecard.dart' show ScoreCard;
 
 mixin PoofsRow on State<ScoreCard> {
   static const List<int> poofs = [0, 1, 2, 3, 4];
@@ -26,7 +26,9 @@ mixin PoofsRow on State<ScoreCard> {
               items: poofs
                   .map(
                     (safetyNum) => ComboBoxItem(
-                        child: Text(safetyNum.toString()), value: safetyNum),
+                      value: safetyNum,
+                      child: Text(safetyNum.toString()),
+                    ),
                   )
                   .toList(),
               placeholder: Text(poofs[0].toString()),
@@ -42,7 +44,9 @@ mixin PoofsRow on State<ScoreCard> {
               items: poofs
                   .map(
                     (safetyNum) => ComboBoxItem(
-                        child: Text(safetyNum.toString()), value: safetyNum),
+                      value: safetyNum,
+                      child: Text(safetyNum.toString()),
+                    ),
                   )
                   .toList(),
               placeholder: Text(poofs[0].toString()),
@@ -58,7 +62,9 @@ mixin PoofsRow on State<ScoreCard> {
               items: poofs
                   .map(
                     (safetyNum) => ComboBoxItem(
-                        child: Text(safetyNum.toString()), value: safetyNum),
+                      value: safetyNum,
+                      child: Text(safetyNum.toString()),
+                    ),
                   )
                   .toList(),
               placeholder: Text(poofs[0].toString()),
