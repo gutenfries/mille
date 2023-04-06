@@ -1,10 +1,7 @@
-# Windows UI for Flutter Showcase
+# Mille
 
-The app showcase for [fluent_ui](https://pub.dev/packages/fluent_ui).
+> The **_only_** scorekeeper app for the [Mille Bornes](https://en.wikipedia.org/wiki/Mille_Bornes) card game.
 
-To run this app, run `flutter create .` in the terminal to generate the platform specific builds, and then run `flutter run`
+## CURRENTLY IN DEVELOPMENT
 
-## Acknowledgements
-
-* App launcher icon
-  https://mobile.twitter.com/fluentui/photo
+![Data Flow Model](docs/data-persistence-model.jpeg)
