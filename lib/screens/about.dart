@@ -3,7 +3,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:provider/provider.dart';
 
 import '../theme.dart';
-import '../widgets/page.dart';
+import '../widgets/helpers/page.dart';
 
 class AboutScreen extends ScrollablePage {
   AboutScreen({super.key});

@@ -6,7 +6,7 @@ part 'game.g.dart';
 
 // Players are managed by the Game object.
 @HiveType(typeId: 0)
-class _Player extends HiveObject {
+class Player extends HiveObject {
   @HiveField(0)
   String? name;
 
@@ -50,7 +50,7 @@ class Game extends HiveObject {
   String gameID = Random.secure().nextInt(0xFFFFFFFF).toRadixString(16);
 
   @HiveField(1)
-  List<_Player> players = [];
+  List<Player> players = [];
 
   @HiveField(2)
   DateTime? createdAt;

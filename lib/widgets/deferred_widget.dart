@@ -1,3 +1,8 @@
+// Copyright 2019 The Flutter team. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+// Copied from https://github.com/flutter/gallery/blob/d030f1e5316310c48fc725f619eb980a0597366d/lib/deferred_widget.dart
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 

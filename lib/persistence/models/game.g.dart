@@ -6,17 +6,17 @@ part of 'game.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class PlayerAdapter extends TypeAdapter<_Player> {
+class PlayerAdapter extends TypeAdapter<Player> {
   @override
   final int typeId = 0;
 
   @override
-  _Player read(BinaryReader reader) {
+  Player read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return _Player()
+    return Player()
       ..name = fields[0] as String?
       ..playerID = fields[1] as String
       ..totalScore = fields[2] == null ? 0 : fields[2] as int
@@ -32,7 +32,7 @@ class PlayerAdapter extends TypeAdapter<_Player> {
   }
 
   @override
-  void write(BinaryWriter writer, _Player obj) {
+  void write(BinaryWriter writer, Player obj) {
     writer
       ..writeByte(12)
       ..writeByte(0)
@@ -84,7 +84,7 @@ class GameAdapter extends TypeAdapter<Game> {
     };
     return Game()
       ..gameID = fields[0] as String
-      ..players = (fields[1] as List).cast<_Player>()
+      ..players = (fields[1] as List).cast<Player>()
       ..createdAt = fields[2] as DateTime?
       ..lastUpdatedAt = fields[3] as DateTime?;
   }

@@ -1,7 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_syntax_view/flutter_syntax_view.dart';
-import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 
 class CardHighlight extends StatefulWidget {
   const CardHighlight({
@@ -73,12 +72,12 @@ class _CardHighlightState extends State<CardHighlight>
                   ),
                   child: isCopying
                       ? Icon(
-                          TablerIcons.check,
+                          FluentIcons.check_mark,
                           color: theme.resources.textOnAccentFillColorPrimary,
                           size: 18,
                         )
                       : Row(children: const [
-                          Icon(TablerIcons.copy),
+                          Icon(FluentIcons.copy),
                           SizedBox(width: 6.0),
                           Text('Copy')
                         ]),
