@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../theme.dart';
-import '../widgets/page.dart';
+import '../widgets/helpers/page.dart';
 
 class DebugScreen extends ScrollablePage {
   DebugScreen({super.key});

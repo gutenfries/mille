@@ -1,7 +1,8 @@
 import 'dart:async';
-import 'package:fluent_ui/fluent_ui.dart';
 
-import 'deferred_widget.dart';
+import 'package:mille/widgets/deferred_widget.dart';
+
+import 'package:fluent_ui/fluent_ui.dart';
 
 mixin PageMixin {
   Widget description({required Widget content}) {
@@ -34,8 +35,8 @@ abstract class Page extends StatelessWidget {
     _pageIndex++;
   }
 
-  final StreamController<dynamic> _controller = StreamController.broadcast();
-  Stream<dynamic> get stateStream => _controller.stream;
+  final StreamController _controller = StreamController.broadcast();
+  Stream get stateStream => _controller.stream;
 
   @override
   Widget build(BuildContext context);
@@ -88,8 +89,8 @@ abstract class ScrollablePage extends Page {
       key: PageStorageKey(_pageIndex),
       scrollController: scrollController,
       header: buildHeader(context),
-      bottomBar: buildBottomBar(context),
       children: buildScrollable(context),
+      bottomBar: buildBottomBar(context),
     );
   }
 }

@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'deferred_widget.dart';
+import 'helpers/deferred_widget.dart';
 
 List<String>? changelog;
 
@@ -102,6 +102,48 @@ class _ChangelogState extends State<Changelog> {
             ),
           );
         }(),
+      ),
+    );
+  }
+}
+
+class ChangeLogButton extends StatefulWidget {
+  const ChangeLogButton({Key? key}) : super(key: key);
+
+  @override
+  State<ChangeLogButton> createState() => _ChangeLogButtonState();
+}
+
+class _ChangeLogButtonState extends State<ChangeLogButton> {
+  @override
+  Widget build(BuildContext context) {
+    assert(debugCheckHasFluentTheme(context));
+    final theme = FluentTheme.of(context);
+
+    return IconButton(
+      onPressed: () {
+        showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (context) => const Changelog(),
+        );
+      },
+      icon: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'What\'s new',
+            style: theme.typography.body?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          Text(
+              // date at compile time
+              'date-time',
+              style: theme.typography.caption),
+          Text(
+            'description...',
+            style: theme.typography.bodyLarge,
+          ),
+        ],
       ),
     );
   }

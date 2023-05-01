@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../theme.dart';
-import '../widgets/page.dart';
+import '../widgets/helpers/page.dart';
 
 const List<String> accentColorNames = [
   'System',
@@ -18,8 +18,8 @@ const List<String> accentColorNames = [
   'Green',
 ];
 
-class SettingsScreen extends ScrollablePage {
-  SettingsScreen({super.key});
+class SettingsPage extends ScrollablePage {
+  SettingsPage({super.key});
 
   @override
   Widget buildHeader(BuildContext context) {
