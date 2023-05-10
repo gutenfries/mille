@@ -240,23 +240,29 @@ class GlobalApplicationState extends State<GlobalApplication>
             ),
           );
         }(),
-        actions: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-          Padding(
-            padding: const EdgeInsetsDirectional.only(end: 8.0),
-            child: ToggleSwitch(
-              content: const Text('Dark Mode'),
-              checked: FluentTheme.of(context).brightness.isDark,
-              onChanged: (v) {
-                if (v) {
-                  appTheme.themeMode = ThemeMode.dark;
-                } else {
-                  appTheme.themeMode = ThemeMode.light;
-                }
-              },
-            ),
-          ),
-          if (!Constants.isWeb) const WindowButtons(),
-        ]),
+        actions: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            if (!Constants.isMobile)
+              Padding(
+                padding: const EdgeInsetsDirectional.only(end: 8.0),
+                child: Center(
+                  child: ToggleSwitch(
+                    content: const Text('Dark Mode'),
+                    checked: FluentTheme.of(context).brightness.isDark,
+                    onChanged: (v) {
+                      if (v) {
+                        appTheme.themeMode = ThemeMode.dark;
+                      } else {
+                        appTheme.themeMode = ThemeMode.light;
+                      }
+                    },
+                  ),
+                ),
+              ),
+            if (!Constants.isWeb) const WindowButtons(),
+          ],
+        ),
       ),
       paneBodyBuilder: (item, child) {
         final name =
@@ -282,12 +288,6 @@ class GlobalApplicationState extends State<GlobalApplication>
                 ],
               ).createShader(rect);
             },
-            child: const FlutterLogo(
-              style: FlutterLogoStyle.horizontal,
-              size: 80.0,
-              textColor: Colors.white,
-              duration: Duration.zero,
-            ),
           ),
         ),
         displayMode: appTheme.displayMode,
