@@ -1,5 +1,5 @@
 // flutter & fluent ui
-import 'package:fluent_ui/fluent_ui.dart' hide Page;
+import 'package:fluent_ui/fluent_ui.dart' hide Page, FluentIcons;
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:url_strategy/url_strategy.dart';
@@ -23,22 +23,7 @@ import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 // local
 import 'navigation.dart';
 import 'constants.dart';
-import 'screens/home.dart';
-import 'screens/settings.dart';
 import 'theme.dart';
-
-import 'widgets/deferred_widget.dart';
-// import 'package:flutter/foundation.dart';
-import 'package:url_launcher/link.dart';
-
-import 'routes/forms.dart' deferred as forms;
-import 'routes/inputs.dart' deferred as inputs;
-import 'routes/navigation.dart' deferred as navigation;
-import 'routes/popups.dart' deferred as popups;
-import 'routes/surfaces.dart' deferred as surfaces;
-import 'routes/theming.dart' deferred as theming;
-
-const String appTitle = 'Win UI for Flutter';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -94,7 +79,7 @@ class App extends StatelessWidget {
       builder: (context, _) {
         final appTheme = context.watch<AppTheme>();
         return FluentApp.router(
-          title: appTitle,
+          title: AppTheme.appTitle,
           themeMode: appTheme.themeMode,
           debugShowCheckedModeBanner: false,
           color: appTheme.accentColor,
@@ -326,12 +311,12 @@ class GlobalApplicationState extends State<GlobalApplication>
           trailingIcon: IgnorePointer(
             child: IconButton(
               onPressed: () {},
-              icon: const Icon(FluentIcons.search),
+              icon: const Icon(TablerIcons.search),
             ),
           ),
           placeholder: 'Search',
         ),
-        autoSuggestBoxReplacement: const Icon(FluentIcons.search),
+        autoSuggestBoxReplacement: const Icon(TablerIcons.search),
         footerItems: Navigation.navFooterItems,
       ),
       onOpenSearch: () {

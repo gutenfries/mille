@@ -1,14 +1,11 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
-import 'package:mille/main.dart';
-import 'package:url_launcher/link.dart';
 
-import '../navigation.dart';
 import '../widgets/changelog.dart';
 import '../widgets/helpers/page.dart';
 import '../widgets/helpers/spacing.dart';
 import '../widgets/shortcuts.dart';
-import '../widgets/sponsors.dart';
+import '../widgets/sponsor.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -24,7 +21,7 @@ class _HomePageState extends State<HomePage> with PageMixin {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasFluentTheme(context));
-    final theme = FluentTheme.of(context);
+    // final theme = FluentTheme.of(context);
 
     return ScaffoldPage.scrollable(
       header: const PageHeader(

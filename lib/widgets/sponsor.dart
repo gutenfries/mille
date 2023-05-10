@@ -1,8 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:url_launcher/link.dart';
-import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
-import 'package:url_launcher/link.dart';
 
 import '../widgets/helpers/spacing.dart';
 

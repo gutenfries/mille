@@ -1,6 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
 
-import '../widgets/player.dart';
 import 'scorecard_title.dart';
 
 class ScoreCard extends StatefulWidget {

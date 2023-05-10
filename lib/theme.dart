@@ -6,6 +6,8 @@ import 'package:system_theme/system_theme.dart';
 import 'constants.dart';
 
 class AppTheme extends ChangeNotifier {
+  static const String appTitle = 'Mille Bournes Scorekeeper App';
+
   /// Static constant containing supported window effects on Linux.
   ///
   /// Does **NOT** indicate that the current environment is Linux.

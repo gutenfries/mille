@@ -35,8 +35,8 @@ abstract class Page extends StatelessWidget {
     _pageIndex++;
   }
 
-  final StreamController _controller = StreamController.broadcast();
-  Stream get stateStream => _controller.stream;
+  final StreamController<dynamic> _controller = StreamController.broadcast();
+  Stream<dynamic> get stateStream => _controller.stream;
 
   @override
   Widget build(BuildContext context);
@@ -89,8 +89,8 @@ abstract class ScrollablePage extends Page {
       key: PageStorageKey(_pageIndex),
       scrollController: scrollController,
       header: buildHeader(context),
-      children: buildScrollable(context),
       bottomBar: buildBottomBar(context),
+      children: buildScrollable(context),
     );
   }
 }

@@ -1,8 +1,6 @@
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:provider/provider.dart';
 
-import '../theme.dart';
 import '../widgets/helpers/page.dart';
 
 class AboutScreen extends ScrollablePage {
@@ -22,7 +20,7 @@ class AboutScreen extends ScrollablePage {
   @override
   List<Widget> buildScrollable(BuildContext context) {
     assert(debugCheckHasMediaQuery(context));
-    final appTheme = context.watch<AppTheme>();
+    // final appTheme = context.watch<AppTheme>();
 
     return [];
   }
