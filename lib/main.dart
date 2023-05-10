@@ -24,6 +24,7 @@ import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'navigation.dart';
 import 'constants.dart';
 import 'theme.dart';
+import 'widgets/desktop/window_buttons.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -322,24 +323,6 @@ class GlobalApplicationState extends State<GlobalApplication>
       onOpenSearch: () {
         searchFocusNode.requestFocus();
       },
-    );
-  }
-}
-
-class WindowButtons extends StatelessWidget {
-  const WindowButtons({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final FluentThemeData theme = FluentTheme.of(context);
-
-    return SizedBox(
-      width: 138,
-      height: 50,
-      child: WindowCaption(
-        brightness: theme.brightness,
-        backgroundColor: Colors.transparent,
-      ),
     );
   }
 }

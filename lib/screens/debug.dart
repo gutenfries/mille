@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../constants.dart';
 import '../theme.dart';
 import '../widgets/helpers/page.dart';
+import '../widgets/helpers/spacing.dart';
 
 class DebugScreen extends ScrollablePage {
   DebugScreen({super.key});
@@ -32,7 +33,7 @@ class DebugScreen extends ScrollablePage {
         'Run Mode',
         style: FluentTheme.of(context).typography.subtitle,
       ),
-      appTheme.spacerSmall,
+      Spacing.small(),
       SyntaxView(
         code: '''
             isDebugMode: ${Constants.isDebugMode},
@@ -45,12 +46,12 @@ class DebugScreen extends ScrollablePage {
             : SyntaxTheme.vscodeLight(),
         fontSize: 16,
       ),
-      appTheme.spacerLarge,
+      Spacing.large(),
       Text(
         'Runtime Platform',
         style: FluentTheme.of(context).typography.subtitle,
       ),
-      appTheme.spacerSmall,
+      Spacing.small(),
       SyntaxView(
         code: '''
             currentPlatform: ${Constants.currentPlatform},
@@ -77,12 +78,12 @@ class DebugScreen extends ScrollablePage {
             : SyntaxTheme.vscodeLight(),
         fontSize: 16,
       ),
-      appTheme.spacerLarge,
+      Spacing.large(),
       Text(
         'Dimmensions',
         style: FluentTheme.of(context).typography.subtitle,
       ),
-      appTheme.spacerSmall,
+      Spacing.small(),
       SyntaxView(
         code: '''
             screenWidth: ${AppTheme.screenWidth(context)},

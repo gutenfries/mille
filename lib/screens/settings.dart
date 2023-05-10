@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../constants.dart';
 import '../theme.dart';
 import '../widgets/helpers/page.dart';
+import '../widgets/helpers/spacing.dart';
 
 const List<String> accentColorNames = [
   'System',
@@ -38,9 +39,9 @@ class SettingsPage extends ScrollablePage {
     final appTheme = context.watch<AppTheme>();
 
     return [
-      appTheme.spacerLarge,
+      Spacing.large(),
       Text('Theme mode', style: FluentTheme.of(context).typography.subtitle),
-      appTheme.spacerSmall,
+      Spacing.small(),
       ...List.generate(ThemeMode.values.length, (index) {
         final mode = ThemeMode.values[index];
         return Padding(
@@ -62,12 +63,12 @@ class SettingsPage extends ScrollablePage {
           ),
         );
       }),
-      appTheme.spacerLarge,
+      Spacing.large(),
       Text(
         'Navigation Display Mode',
         style: FluentTheme.of(context).typography.subtitle,
       ),
-      appTheme.spacerSmall,
+      Spacing.small(),
       ...List.generate(PaneDisplayMode.values.length, (index) {
         final mode = PaneDisplayMode.values[index];
         return Padding(
@@ -83,9 +84,9 @@ class SettingsPage extends ScrollablePage {
           ),
         );
       }),
-      appTheme.spacerLarge,
+      Spacing.large(),
       Text('Accent Color', style: FluentTheme.of(context).typography.subtitle),
-      appTheme.spacerSmall,
+      Spacing.small(),
       Wrap(children: [
         Tooltip(
           message: accentColorNames[0],
@@ -100,12 +101,12 @@ class SettingsPage extends ScrollablePage {
         }),
       ]),
       if (AppTheme.isWindowEffectsSupported) ...[
-        appTheme.spacerLarge,
+        Spacing.large(),
         Text(
           'Window Transparency Effects (${Constants.currentPlatform.toString().replaceAll('TargetPlatform.', '')[0].toUpperCase()}${Constants.currentPlatform.toString().replaceAll('TargetPlatform.', '').substring(1)})',
           style: FluentTheme.of(context).typography.subtitle,
         ),
-        appTheme.spacerSmall,
+        Spacing.small(),
         ...List.generate(AppTheme.supportedWindowEffects.length, (index) {
           final mode = AppTheme.supportedWindowEffects[index];
           return Padding(
@@ -125,10 +126,10 @@ class SettingsPage extends ScrollablePage {
           );
         }),
       ],
-      appTheme.spacerLarge,
+      Spacing.large(),
       Text('Text Direction',
           style: FluentTheme.of(context).typography.subtitle),
-      appTheme.spacerSmall,
+      Spacing.small(),
       ...List.generate(TextDirection.values.length, (index) {
         final direction = TextDirection.values[index];
         return Padding(
@@ -149,9 +150,9 @@ class SettingsPage extends ScrollablePage {
           ),
         );
       }).reversed,
-      appTheme.spacerLarge,
+      Spacing.large(),
       Text('Locale', style: FluentTheme.of(context).typography.subtitle),
-      appTheme.spacerSmall,
+      Spacing.small(),
       Wrap(
         spacing: 15.0,
         runSpacing: 10.0,

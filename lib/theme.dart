@@ -81,12 +81,6 @@ class AppTheme extends ChangeNotifier {
         ].contains(flutter_foundation.defaultTargetPlatform);
   }
 
-  final spacerSmall = const SizedBox(height: 10.0);
-
-  final spacerMedium = const SizedBox(height: 20.0);
-
-  final spacerLarge = const SizedBox(height: 40.0);
-
   TextDirection _textDirection = TextDirection.ltr;
   TextDirection get textDirection => _textDirection;
   set textDirection(TextDirection direction) {
