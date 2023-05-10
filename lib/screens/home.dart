@@ -1,4 +1,4 @@
-import 'package:fluent_ui/fluent_ui.dart';
+import 'package:fluent_ui/fluent_ui.dart' hide FluentIcons;
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 
 import '../widgets/changelog.dart';

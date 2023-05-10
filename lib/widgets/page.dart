@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:mille/widgets/deferred_widget.dart';
+import '../widgets/deferred_widget.dart';
 
-import 'package:fluent_ui/fluent_ui.dart';
+import 'package:fluent_ui/fluent_ui.dart' hide FluentIcons;
 
 mixin PageMixin {
   Widget description({required Widget content}) {

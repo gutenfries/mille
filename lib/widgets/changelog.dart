@@ -1,4 +1,4 @@
-import 'package:fluent_ui/fluent_ui.dart';
+import 'package:fluent_ui/fluent_ui.dart' hide FluentIcons;
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_markdown/flutter_markdown.dart'
     deferred as flutter_markdown;

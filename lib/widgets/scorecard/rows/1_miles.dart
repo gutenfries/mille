@@ -1,4 +1,4 @@
-import 'package:fluent_ui/fluent_ui.dart';
+import 'package:fluent_ui/fluent_ui.dart' hide FluentIcons;
 
 import '../../../constants.dart';
 import '../../../widgets/scorecard.dart' show ScoreCard;
