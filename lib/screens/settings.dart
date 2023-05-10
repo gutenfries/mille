@@ -38,9 +38,9 @@ class SettingsPage extends ScrollablePage {
     final appTheme = context.watch<AppTheme>();
 
     return [
-      appTheme.spacingLarge,
+      appTheme.spacerLarge,
       Text('Theme mode', style: FluentTheme.of(context).typography.subtitle),
-      appTheme.spacingSmall,
+      appTheme.spacerSmall,
       ...List.generate(ThemeMode.values.length, (index) {
         final mode = ThemeMode.values[index];
         return Padding(
@@ -62,12 +62,12 @@ class SettingsPage extends ScrollablePage {
           ),
         );
       }),
-      appTheme.spacingLarge,
+      appTheme.spacerLarge,
       Text(
         'Navigation Display Mode',
         style: FluentTheme.of(context).typography.subtitle,
       ),
-      appTheme.spacingSmall,
+      appTheme.spacerSmall,
       ...List.generate(PaneDisplayMode.values.length, (index) {
         final mode = PaneDisplayMode.values[index];
         return Padding(
@@ -83,9 +83,9 @@ class SettingsPage extends ScrollablePage {
           ),
         );
       }),
-      appTheme.spacingLarge,
+      appTheme.spacerLarge,
       Text('Accent Color', style: FluentTheme.of(context).typography.subtitle),
-      appTheme.spacingSmall,
+      appTheme.spacerSmall,
       Wrap(children: [
         Tooltip(
           message: accentColorNames[0],
@@ -100,12 +100,12 @@ class SettingsPage extends ScrollablePage {
         }),
       ]),
       if (AppTheme.isWindowEffectsSupported) ...[
-        appTheme.spacingLarge,
+        appTheme.spacerLarge,
         Text(
           'Window Transparency Effects (${Constants.currentPlatform.toString().replaceAll('TargetPlatform.', '')[0].toUpperCase()}${Constants.currentPlatform.toString().replaceAll('TargetPlatform.', '').substring(1)})',
           style: FluentTheme.of(context).typography.subtitle,
         ),
-        appTheme.spacingSmall,
+        appTheme.spacerSmall,
         ...List.generate(AppTheme.supportedWindowEffects.length, (index) {
           final mode = AppTheme.supportedWindowEffects[index];
           return Padding(
@@ -125,10 +125,10 @@ class SettingsPage extends ScrollablePage {
           );
         }),
       ],
-      appTheme.spacingLarge,
+      appTheme.spacerLarge,
       Text('Text Direction',
           style: FluentTheme.of(context).typography.subtitle),
-      appTheme.spacingSmall,
+      appTheme.spacerSmall,
       ...List.generate(TextDirection.values.length, (index) {
         final direction = TextDirection.values[index];
         return Padding(
@@ -149,9 +149,9 @@ class SettingsPage extends ScrollablePage {
           ),
         );
       }).reversed,
-      appTheme.spacingLarge,
+      appTheme.spacerLarge,
       Text('Locale', style: FluentTheme.of(context).typography.subtitle),
-      appTheme.spacingSmall,
+      appTheme.spacerSmall,
       Wrap(
         spacing: 15.0,
         runSpacing: 10.0,

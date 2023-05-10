@@ -1,5 +1,80 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:url_launcher/link.dart';
+import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
+import 'package:url_launcher/link.dart';
+
+import '../widgets/helpers/spacing.dart';
+
+/// Current sponsors of the project <3
+final sponsors = [
+  Sponsor(
+    username: 'gutenfries',
+    name: 'marc gutenberger',
+  ),
+];
+
+class Sponsor {
+  final String username;
+  final String name;
+
+  late String imageUrl = 'https://avatars.githubusercontent.com/$username';
+
+  Sponsor({
+    required this.username,
+    required this.name,
+    // required this.imageUrl,
+  });
+
+  @override
+  String toString() =>
+      'Sponsor(username: $username, name: $name, imageUrl: $imageUrl)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Sponsor &&
+        other.username == username &&
+        other.name == name &&
+        other.imageUrl == imageUrl;
+  }
+
+  @override
+  int get hashCode => username.hashCode ^ name.hashCode ^ imageUrl.hashCode;
+}
+
+class SponsorButton extends StatelessWidget {
+  const SponsorButton({
+    Key? key,
+    required this.imageUrl,
+    required this.username,
+    required this.name,
+  }) : super(key: key);
+  final String name;
+  final String imageUrl;
+  final String username;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          height: 60,
+          width: 60,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: NetworkImage(imageUrl),
+            ),
+            shape: BoxShape.circle,
+          ),
+        ),
+        Text(name),
+        Text('@$username'),
+      ],
+    );
+  }
+}
 
 class SponsorDialog extends StatelessWidget {
   const SponsorDialog({Key? key}) : super(key: key);
@@ -7,18 +82,18 @@ class SponsorDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasFluentTheme(context));
+    final theme = FluentTheme.of(context);
+
     return ContentDialog(
       constraints: const BoxConstraints(maxWidth: 600),
       title: Row(
         children: [
-          const Icon(FluentIcons.diamond_user, size: 24.0),
-          const SizedBox(width: 8.0),
-          const Expanded(child: Text('Benefits')),
+          const Expanded(child: Text('Become a Sponsor!')),
           SmallIconButton(
             child: Tooltip(
               message: FluentLocalizations.of(context).closeButtonLabel,
               child: IconButton(
-                icon: const Icon(FluentIcons.chrome_close),
+                icon: const Icon(TablerIcons.x, size: 16.0),
                 onPressed: Navigator.of(context).pop,
               ),
             ),
@@ -27,41 +102,40 @@ class SponsorDialog extends StatelessWidget {
       ),
       content: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           Expanded(
-            child: _Tier(
-              name: 'Royal Secretary',
-              price: r'US$6 per month',
-              benefits: [
-                'General support',
-                'Priority on issues fix',
-                'Sponsor role on Discord',
-                'Be the first to know when a new update rolls out',
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  'Mille is free and open source, but it takes a lot of time and effort to maintain and develop.',
+                  style: theme.typography.body,
+                ),
+                const SizedBox(height: 10.0),
+                Text(
+                  'If you enjoy using Mille, please consider donating to the developer, even small amounts helps! :)',
+                  style: theme.typography.body,
+                ),
               ],
             ),
           ),
-          SizedBox(width: 10.0),
-          Expanded(
-            child: _Tier(
-              name: 'Royal Executor',
-              price: r'US$15 per month',
-              benefits: [
-                'General support',
-                'Priority on issues fix',
-                'Sponsor role on Discord',
-                'Showcasing in the "Sponsors" section',
-                'Be the first to know when a new update rolls out',
-                'Private channel on Discord with dedicated help',
-              ],
-            ),
-          )
         ],
       ),
       actions: [
         Link(
-          uri: Uri.parse('https://www.patreon.com/bdlukaa'),
+          uri: Uri.parse('https://github.com/sponsors/gutenfries'),
           builder: (context, open) => FilledButton(
-            child: const Text('Become a Sponsor'),
+            onPressed: open,
+            child: const Text('GitHub Sponsors'),
+          ),
+        ),
+        Link(
+          uri: Uri.parse('https://account.venmo.com/u/gutenfries'),
+          builder: (context, open) => FilledButton(
+            // ignore: sort_child_properties_last
+            child: const Text('Venmo'),
             onPressed: open,
           ),
         ),
@@ -70,47 +144,75 @@ class SponsorDialog extends StatelessWidget {
   }
 }
 
-class _Tier extends StatelessWidget {
-  const _Tier({
-    Key? key,
-    required this.name,
-    required this.price,
-    required this.benefits,
-  }) : super(key: key);
-
-  final String name;
-  final String price;
-
-  final List<String> benefits;
+class SponsorsCard extends StatelessWidget {
+  const SponsorsCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasFluentTheme(context));
     final theme = FluentTheme.of(context);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
+
+    return Wrap(
       children: [
-        Text(
-          name,
-          style: theme.typography.bodyLarge?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+        Row(
+          children: [
+            Text('Sponsors', style: theme.typography.subtitle),
+            const SizedBox(width: 4.0),
+          ],
         ),
-        Text(price, style: theme.typography.caption),
-        const SizedBox(height: 20.0),
-        ...benefits.map((benefit) {
-          return Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Padding(
-                padding: EdgeInsetsDirectional.only(end: 6.0, top: 9.0),
-                child: Icon(FluentIcons.circle_fill, size: 4.0),
+        Spacing.small(),
+        Wrap(
+          spacing: 10.0,
+          runSpacing: 10.0,
+          children: <Widget>[
+            ...sponsors.map(
+              (sponsor) {
+                return Link(
+                  uri: Uri.parse('https://www.github.com/${sponsor.username}'),
+                  builder: (context, open) {
+                    return IconButton(
+                      onPressed: open,
+                      icon: SponsorButton(
+                        imageUrl: sponsor.imageUrl,
+                        username: sponsor.username,
+                        name: sponsor.name,
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+            IconButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => const SponsorDialog(),
+                );
+              },
+              icon: Column(
+                children: [
+                  SizedBox(
+                    height: 60,
+                    width: 60,
+                    child: ShaderMask(
+                      shaderCallback: (rect) {
+                        return LinearGradient(
+                          colors: [
+                            Colors.white.withOpacity(0.8),
+                            ...Colors.accentColors,
+                          ],
+                        ).createShader(rect);
+                      },
+                      blendMode: BlendMode.srcATop,
+                      child: const Icon(TablerIcons.heart_plus, size: 60),
+                    ),
+                  ),
+                  const Text('Become a Sponsor!'),
+                ],
               ),
-              Expanded(child: Text(benefit)),
-            ],
-          );
-        }),
+            ),
+          ],
+        ),
       ],
     );
   }

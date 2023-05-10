@@ -32,7 +32,7 @@ class DebugScreen extends ScrollablePage {
         'Run Mode',
         style: FluentTheme.of(context).typography.subtitle,
       ),
-      appTheme.spacingSmall,
+      appTheme.spacerSmall,
       SyntaxView(
         code: '''
             isDebugMode: ${Constants.isDebugMode},
@@ -45,12 +45,12 @@ class DebugScreen extends ScrollablePage {
             : SyntaxTheme.vscodeLight(),
         fontSize: 16,
       ),
-      appTheme.spacingLarge,
+      appTheme.spacerLarge,
       Text(
         'Runtime Platform',
         style: FluentTheme.of(context).typography.subtitle,
       ),
-      appTheme.spacingSmall,
+      appTheme.spacerSmall,
       SyntaxView(
         code: '''
             currentPlatform: ${Constants.currentPlatform},
@@ -77,12 +77,12 @@ class DebugScreen extends ScrollablePage {
             : SyntaxTheme.vscodeLight(),
         fontSize: 16,
       ),
-      appTheme.spacingLarge,
+      appTheme.spacerLarge,
       Text(
         'Dimmensions',
         style: FluentTheme.of(context).typography.subtitle,
       ),
-      appTheme.spacingSmall,
+      appTheme.spacerSmall,
       SyntaxView(
         code: '''
             screenWidth: ${AppTheme.screenWidth(context)},

@@ -5,6 +5,8 @@ import 'package:mille/widgets/page.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:provider/provider.dart';
 
+import '../../navigation.dart';
+
 class Flyout2Screen extends StatefulWidget {
   const Flyout2Screen({Key? key}) : super(key: key);
 
@@ -122,7 +124,7 @@ class _Flyout2ScreenState extends State<Flyout2Screen> with PageMixin {
                     barrierDismissible: barrierDismissible,
                     dismissOnPointerMoveAway: dismissOnPointerMoveAway,
                     dismissWithEsc: dismissWithEsc,
-                    navigatorKey: rootNavigatorKey.currentState,
+                    navigatorKey: Navigation.rootNavigatorKey.currentState,
                     builder: (context) {
                       return FlyoutContent(
                         child: Column(
@@ -183,7 +185,7 @@ class _Flyout2ScreenState extends State<Flyout2Screen> with PageMixin {
                     barrierDismissible: barrierDismissible,
                     dismissOnPointerMoveAway: dismissOnPointerMoveAway,
                     dismissWithEsc: dismissWithEsc,
-                    navigatorKey: rootNavigatorKey.currentState,
+                    navigatorKey: Navigation.rootNavigatorKey.currentState,
                     builder: (context) {
                       return MenuFlyout(
                         items: [

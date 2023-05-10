@@ -8,29 +8,54 @@ class ShortCuts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Wrap(
-        children: [
-          ListTile(
-            leading: const Icon(TablerIcons.settings),
-            title: const Text('Settings'),
-            onPressed: () {
-              print('hi mom');
-              Navigator.of(context).pushNamed('settings');
-            },
+    return Wrap(
+      children: [
+        const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Text(
+            'Shortcuts',
+            style: TextStyle(fontSize: 20.0),
           ),
-          ListTile(
-            leading: const Icon(TablerIcons.info_circle),
-            title: const Text('Rules'),
-            onPressed: () {},
-          ),
-          ListTile(
-            leading: const Icon(TablerIcons.info_circle),
-            title: const Text('Settings'),
-            onPressed: () {},
-          ),
-        ],
-      ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Expanded(
+              child: ListTile(
+                leading: const Icon(TablerIcons.settings),
+                title: const Text('Settings'),
+                onPressed: () {
+                  if (Navigation.router.location != '/settings') {
+                    Navigation.router.pushNamed('settings');
+                  }
+                },
+              ),
+            ),
+            Expanded(
+              child: ListTile(
+                leading: const Icon(TablerIcons.info_circle),
+                title: const Text('Rules'),
+                onPressed: () {
+                  if (Navigation.router.location != '/rules') {
+                    Navigation.router.pushNamed('rules');
+                  }
+                },
+              ),
+            ),
+            Expanded(
+              child: ListTile(
+                leading: const Icon(TablerIcons.info_circle),
+                title: const Text('Settings'),
+                onPressed: () {
+                  if (Navigation.router.location != '/settings') {
+                    Navigation.router.pushNamed('settings');
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
