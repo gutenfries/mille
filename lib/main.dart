@@ -26,8 +26,17 @@ import 'constants.dart';
 import 'theme.dart';
 import 'widgets/desktop/window_buttons.dart';
 
+// ffi
+import 'ffi/ffi.dart' if (dart.library.html) 'ffi/ffi_web.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  Platform platform = await api.platform();
+  bool isRelease = await api.rustReleaseMode();
+  print(await api.add(a: 1, b: 2));
+  print(platform);
+  print(isRelease);
 
   if (AppTheme.isSystemAccentColorSupported) {
     SystemTheme.accentColor.load();
@@ -89,14 +98,14 @@ class App extends StatelessWidget {
             accentColor: appTheme.accentColor,
             visualDensity: VisualDensity.standard,
             focusTheme: FocusThemeData(
-              glowFactor: is10footScreen() ? 2.0 : 0.0,
+              glowFactor: is10footScreen(context) ? 2.0 : 0.0,
             ),
           ),
           theme: FluentThemeData(
             accentColor: appTheme.accentColor,
             visualDensity: VisualDensity.standard,
             focusTheme: FocusThemeData(
-              glowFactor: is10footScreen() ? 2.0 : 0.0,
+              glowFactor: is10footScreen(context) ? 2.0 : 0.0,
             ),
           ),
           locale: appTheme.locale,

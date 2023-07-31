@@ -13,7 +13,7 @@ class _ScoreCardsPageState extends State<ScoreCardsPage> {
   @override
   Widget build(BuildContext context) {
     return ScaffoldPage.scrollable(
-      children: [
+      children: const [
         CrudBar(),
       ],
     );

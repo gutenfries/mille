@@ -1,7 +1,7 @@
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:fluent_ui/fluent_ui.dart' hide FluentIcons;
 import 'package:flutter_syntax_view/flutter_syntax_view.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../theme.dart';
@@ -25,7 +25,7 @@ class DebugScreen extends ScrollablePage {
   @override
   List<Widget> buildScrollable(BuildContext context) {
     assert(debugCheckHasMediaQuery(context));
-    final appTheme = context.watch<AppTheme>();
+    // final appTheme = context.watch<AppTheme>();
     final theme = FluentTheme.of(context);
 
     return [
